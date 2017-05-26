@@ -1,5 +1,4 @@
 import React, { PureComponent } from "react";
-import { div, p } from "react-dom";
 import Styled from "styled-components";
 import Header from "../header/headerView";
 import HomeContent from "../../components/HomeContent";
