@@ -2,7 +2,7 @@ import React from "react";
 import Styled from "styled-components";
 
 const HomeHeaderWrapper = Styled.div`
-
+  padding-top: 20px;
 `;
 
 const BrowseTitle = Styled.h1`
@@ -38,7 +38,7 @@ const HomeHeaderSeparator = Styled.div`
 export default props => (
   <HomeHeaderWrapper>
     <BrowseTitle>
-      Browse
+      Movies
     </BrowseTitle>
     <HomeTabs>
       <HomeTab active>Latest</HomeTab>
