@@ -5,8 +5,6 @@ import LeftSideBarSection from "./LeftSideBarSection";
 
 const SideBarWrapper = Styled.div`
   flex: 1;
-  min-height: 100vh;
-  height: 100%;
   background-color: #363949;
   border-right: 1px solid #2f3241;
 `;
