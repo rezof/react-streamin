@@ -11,6 +11,7 @@
     "redux": "^3.6.0",
     "redux-logger": "^3.0.6",
     "redux-loop": "^2.2.2",
+    "redux-loop-symbol-ponyfill": "^2.2.2",
     "styled-components": "^2.0.0"
   },
   "devDependencies": {
