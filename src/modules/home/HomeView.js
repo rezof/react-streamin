@@ -5,16 +5,22 @@ import HomeContent from "../../components/HomeContent";
 
 const ContentWrapper = Styled.div`
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   background-color: #393d4c
 `;
 
 class Home extends PureComponent {
+  componentDidMount() {
+    const { actions: { load_data } } = this.props;
+    load_data();
+  }
+
   render() {
+    const { homeState: { data, loading_data } } = this.props;
     return (
       <ContentWrapper>
         <Header />
-        <HomeContent />
+        <HomeContent data={data} loading_data={loading_data} />
       </ContentWrapper>
     );
   }
