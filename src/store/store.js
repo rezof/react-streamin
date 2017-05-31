@@ -1,5 +1,4 @@
 import { compose, createStore, applyMiddleware } from "redux";
-import { install } from "redux-loop";
 import * as reduxLoop from "redux-loop-symbol-ponyfill";
 import logger from "redux-logger";
 
