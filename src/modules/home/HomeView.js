@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import Styled from "styled-components";
 import Header from "../header/headerView";
-import HomeContent from "../../components/HomeContent";
+import HomeContent from "./components/HomeContent";
 
 const ContentWrapper = Styled.div`
   width: 100vw;
@@ -11,8 +11,10 @@ const ContentWrapper = Styled.div`
 
 class Home extends PureComponent {
   componentDidMount() {
-    const { actions: { load_data } } = this.props;
-    load_data();
+    const { actions: { load_data }, homeState } = this.props;
+    if (homeState.data.length == 0) {
+      load_data();
+    }
   }
 
   render() {
