@@ -5,6 +5,7 @@ import search from "react-icons/lib/md/search";
 import plus from "react-icons/lib/md/add";
 import more from "react-icons/lib/md/keyboard-control";
 import play from "react-icons/lib/md/play-arrow";
+import right_arrow from "react-icons/lib/md/keyboard-arrow-right";
 
 const icons = {
   movies: movies,
@@ -13,7 +14,8 @@ const icons = {
   search,
   plus,
   more,
-  play
+  play,
+  right_arrow
 };
 
 export default icons;
