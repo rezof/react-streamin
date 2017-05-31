@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import _Home from "./HomeView";
+import Home from "./HomeView";
 
 import * as HomeViewActions from "./HomeState";
 
@@ -13,4 +13,4 @@ export default connect(
       actions: bindActionCreators(HomeViewActions, dispatch)
     };
   }
-)(_Home);
+)(Home);
