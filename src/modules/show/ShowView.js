@@ -1,8 +1,12 @@
+// @flow
+
 import React, { PureComponent } from "react";
 import Styled from "styled-components";
 
 import Header from "../header/headerView";
 import ShowContent from "./components/ShowContent";
+
+import type { stateType } from "./showState";
 
 const showContainer = Styled.div`
 
@@ -14,8 +18,20 @@ const ContentWrapper = Styled.div`
   background-color: #393d4c
 `;
 
+type propsType = {
+  match: {
+    params: {
+      id: number
+    }
+  },
+  actions: {
+    load_show_data: Function
+  },
+  showState: stateType
+};
+
 class Show extends PureComponent {
-  constructor(props) {
+  constructor(props: propsType) {
     super(props);
   }
 

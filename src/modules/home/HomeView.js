@@ -1,7 +1,11 @@
+// @flow
+
 import React, { PureComponent } from "react";
 import Styled from "styled-components";
 import Header from "../header/headerView";
 import HomeContent from "./components/HomeContent";
+
+import type { stateType } from "./HomeState";
 
 const ContentWrapper = Styled.div`
   width: 100vw;
@@ -9,7 +13,16 @@ const ContentWrapper = Styled.div`
   background-color: #393d4c
 `;
 
+type propType = {
+  actions: {
+    load_data: Function
+  },
+  homeState: stateType
+};
+
 class Home extends PureComponent {
+  props: propType;
+
   componentDidMount() {
     const { actions: { load_data }, homeState } = this.props;
     if (homeState.data.length == 0) {

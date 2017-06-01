@@ -1,5 +1,9 @@
+// @flow
+
 import React from "react";
 import Styled from "styled-components";
+
+import type { showEpisodeType } from "../ShowState";
 
 import icons from "../../../assets/icons";
 
@@ -12,7 +16,12 @@ const ListContainer = Styled.div`
   overflow: scroll;
 `;
 
-const EpisodesList = props => {
+type propsType = {
+  data: Array<showEpisodeType>,
+  selected?: number
+};
+
+const EpisodesList = (props: propsType) => {
   const { data } = props;
   return (
     <ListContainer>

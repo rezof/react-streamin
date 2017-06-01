@@ -68,7 +68,7 @@ export const show_details_loaded = (
   };
 };
 
-type showEpisodeType = {
+export type showEpisodeType = {
   id: number,
   name: string,
   season: number,
@@ -100,7 +100,7 @@ export const show_data_load_failed = (): showDataLoadFailedActionType => {
   };
 };
 
-type stateType = {
+export type stateType = {
   loading_data: boolean,
   loading_data_failed: boolean,
   show: showDetailsType

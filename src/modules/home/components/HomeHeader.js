@@ -1,3 +1,5 @@
+// @flow
+
 import React from "react";
 import Styled from "styled-components";
 
@@ -35,7 +37,7 @@ const HomeHeaderSeparator = Styled.div`
   border-bottom: 2px solid #2f3241;
 `;
 
-export default props => (
+export default () => (
   <HomeHeaderWrapper>
     <BrowseTitle>
       Movies

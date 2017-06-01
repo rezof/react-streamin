@@ -33,7 +33,7 @@ export const load_data = (): loadDataActionType => {
   return { type: LOAD_DATA };
 };
 
-type showType = {
+export type showType = {
   id: number,
   name: string,
   premiered: string,
@@ -64,7 +64,7 @@ type actionType = {
   payload?: Object
 };
 
-type stateType = {
+export type stateType = {
   loading_data: boolean,
   data: Array<showType>
 };
@@ -84,7 +84,7 @@ const reducer = (
       );
     case DATA_LOADED:
       let loaded_data = [];
-      if (typeof payload == "object" && payload.hasOwnProperty("slice"))
+      if (payload && typeof payload.slice === "function")
         loaded_data = payload.slice(0, 15);
       return {
         ...state,

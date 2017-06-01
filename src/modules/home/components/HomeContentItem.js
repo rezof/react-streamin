@@ -1,7 +1,11 @@
+// @flow
+
 import React, { PureComponent } from "react";
 import Styled from "styled-components";
 
 import { Link } from "react-router-dom";
+
+import type { showType } from "../HomeState";
 
 import icons from "../../../assets/icons";
 
@@ -43,28 +47,36 @@ const ItemBodyOps = Styled.div`
   background-color: rgba(0, 0, 0, 0.5);
 `;
 
+type propsType = {
+  item: showType
+};
+
+type stateType = {
+  showBodyOps: boolean
+};
+
 class HomeContentItem extends PureComponent {
-  constructor(props) {
+  state: stateType;
+
+  constructor(props: propsType) {
     super(props);
     this.state = {
       showBodyOps: false
     };
-    this.mouseEnterBody = this.mouseEnterBody.bind(this);
-    this.renderBodyOps = this.renderBodyOps.bind(this);
-    this.mouseLeaveBody = this.mouseLeaveBody.bind(this);
+    (this: any).mouseEnterBody = this.mouseEnterBody.bind(this);
+    (this: any).renderBodyOps = this.renderBodyOps.bind(this);
+    (this: any).mouseLeaveBody = this.mouseLeaveBody.bind(this);
   }
 
   mouseEnterBody() {
     this.setState({ showBodyOps: true });
   }
 
-  gotoItem() {}
-
   mouseLeaveBody() {
     this.setState({ showBodyOps: false });
   }
 
-  renderBodyOps(id) {
+  renderBodyOps(id: number) {
     if (!this.state.showBodyOps) {
       return null;
     }

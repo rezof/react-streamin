@@ -1,3 +1,4 @@
+// @flow
 import React from "react";
 import Styled from "styled-components";
 
@@ -12,11 +13,17 @@ const ListContainer = Styled.div`
   overflow: scroll;
 `;
 
-const SeasonsList = props => {
+type SeasonsListPropsType = {
+  data: Array<number>,
+  selectedSeason: number,
+  seasonSelectionHandler: Function
+};
+
+const SeasonsList = (props: SeasonsListPropsType) => {
   const { data, seasonSelectionHandler, selectedSeason } = props;
   return (
     <ListContainer>
-      <SeasonListItem index="#" key={0} />
+      <SeasonListItem clickHandler={() => {}} index={0} key={0} />
       {data.map(number => {
         return (
           <SeasonListItem
@@ -60,7 +67,13 @@ const SeasonArrowContainer = Styled.div`
   color: rgba(255, 255, 255, 0.2);
 `;
 
-const SeasonListItem = props => {
+type SeasonListItemPropsType = {
+  index: number,
+  clickHandler: Function,
+  selectedSeason?: number
+};
+
+const SeasonListItem = (props: SeasonListItemPropsType) => {
   const { index, clickHandler, selectedSeason } = props;
   let Container = SeasonItemContainer;
 
@@ -87,7 +100,7 @@ const SeasonListItem = props => {
       </SeasonNumberContainer>
       <SeasonNameContainer>
         <Text>
-          {`season ${Number.isNaN(parseInt(index)) ? "" : index}`}
+          {`season ${index === 0 ? "" : index}`}
         </Text>
       </SeasonNameContainer>
       <SeasonArrowContainer>

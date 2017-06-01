@@ -1,9 +1,12 @@
+// @flow
 import React, { PureComponent } from "react";
 import Styled from "styled-components";
 
 import ContentTemplate from "../../../components/ContentTemplate";
 import HomeHeader from "./HomeHeader";
 import HomeContentItem from "./HomeContentItem";
+
+import type { showType, stateType } from "../HomeState";
 
 const ItemsList = Styled.div`
     padding: 20px;
@@ -19,8 +22,12 @@ const LoadingData = Styled.p`
   color: white;
 `;
 
+type propsType = stateType;
+
 class HomeContent extends PureComponent {
-  constructor(props) {
+  props: propsType;
+
+  constructor(props: propsType) {
     super(props);
   }
 
