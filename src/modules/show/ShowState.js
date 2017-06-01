@@ -1,14 +1,11 @@
+// @flow
+
 import { loop, Effects } from "redux-loop-symbol-ponyfill";
 
 const LOAD_SHOW_DATA = "LOAD_SHOW_DATA";
 const SHOW_DATA_LOADED = "SHOW_DATA_LOADED";
 const SHOW_LOAD_DATA_FAILED = "SHOW_LOAD_DATA_FAILED";
 const SHOW_DETAILS_LOADED = "SHOW_DETAILS_LOADED";
-
-export const load_show_data = id => ({
-  type: LOAD_SHOW_DATA,
-  payload: id
-});
 
 const formatShowEpisode = data => {
   return data.reduce(function(acc, curr) {
@@ -21,7 +18,7 @@ const formatShowEpisode = data => {
   }, {});
 };
 
-const fetch_show_data = id => {
+const fetch_show_data = ({ id }: { id: number }) => {
   return fetch(`http://api.tvmaze.com/shows/${id}/episodes`)
     .then(r => r.json())
     .then(formatShowEpisode)
@@ -29,31 +26,84 @@ const fetch_show_data = id => {
     .catch(show_data_load_failed);
 };
 
-export const show_details_loaded = data => {
-  return {
-    type: SHOW_DETAILS_LOADED,
-    payload: { ...data }
-  };
-};
-
-const fetch_show_details = id => {
+const fetch_show_details = (id: number) => {
   return fetch(`http://api.tvmaze.com/shows/${id}`)
     .then(r => r.json())
     .then(show_details_loaded)
     .catch(show_data_load_failed);
 };
 
-export const show_data_loaded = data => {
+type loadShowDataActionType = {
+  type: string,
+  payload: number
+};
+
+export const load_show_data = (id: number): loadShowDataActionType => ({
+  type: LOAD_SHOW_DATA,
+  payload: id
+});
+
+type showDetailsType = {
+  name?: string,
+  image?: {
+    medium: string,
+    original: string
+  },
+  status?: string,
+  premiered?: string,
+  episodes?: Array<showEpisodeType>
+};
+
+type showDetailsLoadedActionType = {
+  type: string,
+  payload: showDetailsType
+};
+
+export const show_details_loaded = (
+  data: showDetailsType
+): showDetailsLoadedActionType => {
+  return {
+    type: SHOW_DETAILS_LOADED,
+    payload: { ...data }
+  };
+};
+
+type showEpisodeType = {
+  id: number,
+  name: string,
+  season: number,
+  number: number,
+  summary: string
+};
+
+type showDataLoadedActionType = {
+  type: string,
+  payload: Array<showEpisodeType>
+};
+
+export const show_data_loaded = (
+  data: Array<showEpisodeType>
+): showDataLoadedActionType => {
   return {
     type: SHOW_DATA_LOADED,
     payload: data
   };
 };
 
-export const show_data_load_failed = error => {
+type showDataLoadFailedActionType = {
+  type: string
+};
+
+export const show_data_load_failed = (): showDataLoadFailedActionType => {
   return {
     type: SHOW_DATA_LOADED //SHOW_LOAD_DATA_FAILED,
   };
+};
+
+type stateType = {
+  loading_data: boolean,
+  loading_data_failed: boolean,
+  show: showDetailsType
 };
 
 const initialState = {
@@ -62,7 +112,15 @@ const initialState = {
   show: {}
 };
 
-const ShowStateReducer = (state = initialState, { type, payload }) => {
+type ActionType = {
+  type: string,
+  payload?: Object
+};
+
+const ShowStateReducer = (
+  state: stateType = initialState,
+  { type, payload }: ActionType
+) => {
   switch (type) {
     case LOAD_SHOW_DATA:
       return loop(
@@ -77,9 +135,9 @@ const ShowStateReducer = (state = initialState, { type, payload }) => {
       return loop(
         {
           ...state,
-          show: { ...payload }
+          show: payload
         },
-        Effects.promise(fetch_show_data, payload.id)
+        Effects.promise(fetch_show_data, payload)
       );
     case SHOW_DATA_LOADED:
       return {
@@ -87,7 +145,7 @@ const ShowStateReducer = (state = initialState, { type, payload }) => {
         loading_data: false,
         show: {
           ...state.show,
-          episodes: { ...payload }
+          episodes: payload
         }
       };
     case SHOW_LOAD_DATA_FAILED:
