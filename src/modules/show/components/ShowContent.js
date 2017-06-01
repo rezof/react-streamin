@@ -31,24 +31,24 @@ const ShowContentWrapper = Styled.div`
   justify-content: space-between;
 `;
 
-const ShowExpandContent = Styled.div`
-  flex: 1;
-  height: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid #9c9ea6;
-  border-right: none;
-  border-left: none;
-`;
-
-const ShowExpandContentText = Styled.p`
-  margin: 0;
-  padding: 0;
-  font-weight: 600;
-  font-size: 14px;
-  color: #9c9ea6;
-`;
+// const ShowExpandContent = Styled.div`
+//   flex: 1;
+//   height: 30px;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   border: 1px solid #9c9ea6;
+//   border-right: none;
+//   border-left: none;
+// `;
+//
+// const ShowExpandContentText = Styled.p`
+//   margin: 0;
+//   padding: 0;
+//   font-weight: 600;
+//   font-size: 14px;
+//   color: #9c9ea6;
+// `;
 
 class ShowContent extends PureComponent {
   constructor(props) {
@@ -96,11 +96,14 @@ class ShowContent extends PureComponent {
             <ShowContentWrapper>
               {content}
             </ShowContentWrapper>
+            {/*
             <ShowExpandContent>
-              <ShowExpandContentText>
-                Expand
-              </ShowExpandContentText>
+                <ShowExpandContentText>
+                  Expand
+                </ShowExpandContentText>
+
             </ShowExpandContent>
+            */}
           </ShowContentBody>
         </ContentWrapper>
       </ContentTemplate>
