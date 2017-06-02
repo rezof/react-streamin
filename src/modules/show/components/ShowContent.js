@@ -28,7 +28,6 @@ const ShowContentBody = Styled.div`
 
 const ShowContentWrapper = Styled.div`
   width: 100%;
-  max-height: 40vh;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -71,13 +70,14 @@ class ShowContent extends PureComponent {
       selectedSeason: 0
     };
     (this: any).seasonSelectedHandler = this.seasonSelectedHandler.bind(this);
+    (this: any).renderShowContent = this.renderShowContent.bind(this);
   }
 
   seasonSelectedHandler(season: number) {
     this.setState({ selectedSeason: season });
   }
 
-  render() {
+  renderShowContent() {
     const { showState: { loading_data, show } } = this.props;
     let content = null;
     if (loading_data) {
@@ -103,13 +103,19 @@ class ShowContent extends PureComponent {
         <EpisodesList key={2} data={episodesList} />
       ];
     }
+
+    return content;
+  }
+
+  render() {
+    const { showState: { show } } = this.props;
     return (
       <ContentTemplate>
         <ContentWrapper>
           <ShowHeader showInfo={show} />
           <ShowContentBody>
             <ShowContentWrapper>
-              {content}
+              {this.renderShowContent()}
             </ShowContentWrapper>
             {/*
             <ShowExpandContent>
