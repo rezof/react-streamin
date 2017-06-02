@@ -14,7 +14,7 @@ const ListContainer = Styled.div`
 `;
 
 type SeasonsListPropsType = {
-  data: Array<number>,
+  data: Array<string>,
   selectedSeason: number,
   seasonSelectionHandler: Function
 };
@@ -23,14 +23,13 @@ const SeasonsList = (props: SeasonsListPropsType) => {
   const { data, seasonSelectionHandler, selectedSeason } = props;
   return (
     <ListContainer>
-      <SeasonListItem clickHandler={() => {}} index={0} key={0} />
+      <SeasonListItem clickHandler={() => {}} index={"0"} key={0} />
       {data.map(number => {
         return (
           <SeasonListItem
             clickHandler={seasonSelectionHandler}
             index={number}
             key={number}
-            hoverable
             selectedSeason={selectedSeason}
           />
         );
@@ -68,7 +67,7 @@ const SeasonArrowContainer = Styled.div`
 `;
 
 type SeasonListItemPropsType = {
-  index: number,
+  index: string,
   clickHandler: Function,
   selectedSeason?: number
 };
@@ -77,9 +76,9 @@ const SeasonListItem = (props: SeasonListItemPropsType) => {
   const { index, clickHandler, selectedSeason } = props;
   let Container = SeasonItemContainer;
 
-  if (props.hasOwnProperty("hoverable")) {
+  if (index !== 0) {
     if (selectedSeason === index) {
-      // for some reason the normal extend wont work
+      // for some reason extend won't work
       Container = Styled(Container)`
         background-color: rgba(255, 255, 255, 0.05);
       `;
@@ -100,7 +99,7 @@ const SeasonListItem = (props: SeasonListItemPropsType) => {
       </SeasonNumberContainer>
       <SeasonNameContainer>
         <Text>
-          {`season ${index === 0 ? "" : index}`}
+          {`season ${index == 0 ? "#" : index}`}
         </Text>
       </SeasonNameContainer>
       <SeasonArrowContainer>

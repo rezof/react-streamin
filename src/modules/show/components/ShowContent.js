@@ -1,3 +1,4 @@
+// @flow
 import React, { PureComponent } from "react";
 import Styled from "styled-components";
 
@@ -7,14 +8,16 @@ import SeasonsList from "./SeasonsList";
 import EpisodesList from "./EpisodesList";
 import ShowHeader from "./ShowHeader";
 
+import type { stateType as showStateType, showDetailsType } from "../ShowState";
+
 const ContentWrapper = Styled.div`
   min-height: calc(100vh - 50px);
 `;
 
-const Loading_Data = Styled.p`
-  color: white;
+const LoadingData = Styled.p`
   width: 100%;
-  font-size: 14px;
+  text-align: center;
+  color: white;
 `;
 
 const ShowContentBody = Styled.div`
@@ -50,22 +53,35 @@ const ShowContentWrapper = Styled.div`
 //   color: #9c9ea6;
 // `;
 
+type propsType = {
+  showState: showStateType
+};
+
+type stateType = {
+  selectedSeason: number
+};
+
 class ShowContent extends PureComponent {
-  constructor(props) {
+  props: propsType;
+  state: stateType;
+
+  constructor(props: propsType) {
     super(props);
-    this.state = {};
-    this.seasonSelectedHandler = this.seasonSelectedHandler.bind(this);
+    this.state = {
+      selectedSeason: 0
+    };
+    (this: any).seasonSelectedHandler = this.seasonSelectedHandler.bind(this);
   }
 
-  seasonSelectedHandler(season) {
+  seasonSelectedHandler(season: number) {
     this.setState({ selectedSeason: season });
   }
 
   render() {
-    const { showState: { load_show_data, show } } = this.props;
+    const { showState: { loading_data, show } } = this.props;
     let content = null;
-    if (load_show_data) {
-      content = <Loading_Data>loading...</Loading_Data>;
+    if (loading_data) {
+      content = <LoadingData>loading...</LoadingData>;
     } else if (
       show.hasOwnProperty("episodes") &&
       typeof show.episodes == "object" &&
@@ -73,7 +89,6 @@ class ShowContent extends PureComponent {
     ) {
       const { episodes } = show;
       const seasons = Object.keys(episodes);
-
       let episodesList = [];
       if (this.state.selectedSeason) {
         episodesList = episodes[this.state.selectedSeason];

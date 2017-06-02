@@ -33,7 +33,7 @@ const fetch_show_details = (id: number) => {
     .catch(show_data_load_failed);
 };
 
-type loadShowDataActionType = {
+export type loadShowDataActionType = {
   type: string,
   payload: number
 };
@@ -43,7 +43,7 @@ export const load_show_data = (id: number): loadShowDataActionType => ({
   payload: id
 });
 
-type showDetailsType = {
+export type showDetailsType = {
   name?: string,
   image?: {
     medium: string,
@@ -51,7 +51,7 @@ type showDetailsType = {
   },
   status?: string,
   premiered?: string,
-  episodes?: Array<showEpisodeType>
+  episodes?: Object
 };
 
 type showDetailsLoadedActionType = {

@@ -31,9 +31,7 @@ type propsType = {
 };
 
 class Show extends PureComponent {
-  constructor(props: propsType) {
-    super(props);
-  }
+  props: propsType;
 
   componentDidMount() {
     const {
