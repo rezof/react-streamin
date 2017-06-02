@@ -12,7 +12,7 @@ const { right_arrow: RightArrowIcon } = icons;
 const ListContainer = Styled.div`
   flex: 1;
   max-width: 40vw;
-  max-height: 60vh;
+  max-height: 500px;
   overflow: scroll;
 `;
 
