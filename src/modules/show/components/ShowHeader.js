@@ -6,6 +6,8 @@ const _ShowHeader = Styled.div`
   width: 100%;
   background-repeat: no-repeat;
   background-size: cover;
+  background-color: rgb(47, 50, 65);
+  border-bottom: 1px solid rgba(47, 50, 65, 0.8);
 `;
 
 const ShowHeaderInfo = Styled.div`
@@ -94,6 +96,7 @@ const ShowHeader = props => {
     showName = name;
     ShowHeader = _ShowHeader.extend`
       background-image: url(https://darksupernaturalangel.files.wordpress.com/2016/07/4567832-arrow-banner.jpg);
+      border-bottom: none;
     `;
     if (status.toLowerCase() == "running") {
       showStatus = premiered.substring(0, 4) + " - ";
@@ -104,10 +107,11 @@ const ShowHeader = props => {
       <ShowHeaderGradient>
         <ShowHeaderInfo>
           <ShowHeaderTitleContainer>
-            <ShowHeaderTitle>
-              {showName}
-              <ShowStatusContainer> ({showStatus})</ShowStatusContainer>
-            </ShowHeaderTitle>
+            {show.hasOwnProperty("image") &&
+              <ShowHeaderTitle>
+                {showName}
+                <ShowStatusContainer> ({showStatus})</ShowStatusContainer>
+              </ShowHeaderTitle>}
           </ShowHeaderTitleContainer>
           <ShowHeaderOpsContainer>
             <HeaderOpContainer>
