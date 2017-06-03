@@ -19,11 +19,26 @@ type SeasonsListPropsType = {
   seasonSelectionHandler: Function
 };
 
+const SeasonsListHeader = () =>
+  <SeasonItemContainer>
+    <SeasonNumberContainer>
+      <Text>
+        #
+      </Text>
+    </SeasonNumberContainer>
+    <SeasonNameContainer>
+      <Text>
+        season #
+      </Text>
+    </SeasonNameContainer>
+    <SeasonArrowContainer />
+  </SeasonItemContainer>;
+
 const SeasonsList = (props: SeasonsListPropsType) => {
   const { data, seasonSelectionHandler, selectedSeason } = props;
   return (
     <ListContainer>
-      <SeasonListItem clickHandler={() => {}} index={"0"} key={0} />
+      {SeasonsListHeader()}
       {data.map(number => {
         return (
           <SeasonListItem

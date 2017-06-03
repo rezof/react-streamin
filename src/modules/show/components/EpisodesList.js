@@ -21,19 +21,34 @@ type propsType = {
   selected?: number
 };
 
-const EpisodesList = (props: propsType) => {
+const EpisodeListHeader = () =>
+  <EpisodeItemContainer>
+    <EpisodeNumberContainer>
+      <Text>
+        #
+      </Text>
+    </EpisodeNumberContainer>
+    <EpisodeNameContainer>
+      <Text>
+        Episode #
+      </Text>
+    </EpisodeNameContainer>
+    <EpisodeArrowContainer />
+  </EpisodeItemContainer>;
+
+export const EpisodesList = (props: propsType) => {
   const { data } = props;
   return (
     <ListContainer>
-      <EpisodeListItem number="#" data={{ name: "Episode Title" }} />
-      {data.map((episode, index) => (
+      {EpisodeListHeader()}
+      {data.map((episode, index) =>
         <EpisodeListItem
           hoverable
           number={episode.number}
           key={index}
           data={episode}
         />
-      ))}
+      )}
     </ListContainer>
   );
 };
@@ -66,7 +81,7 @@ const EpisodeArrowContainer = Styled.div`
   color: rgba(255, 255, 255, 0.2);
 `;
 
-const EpisodeListItem = props => {
+export const EpisodeListItem = props => {
   const { data: { name }, number } = props;
   let Container = EpisodeItemContainer;
   if (props.hasOwnProperty("hoverable")) {
@@ -90,7 +105,7 @@ const EpisodeListItem = props => {
         </Text>
       </EpisodeNameContainer>
       <EpisodeArrowContainer>
-        {parseInt(number) ? <RightArrowIcon size={24} /> : null}
+        <RightArrowIcon size={24} />
       </EpisodeArrowContainer>
     </Container>
   );
