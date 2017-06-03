@@ -88,7 +88,9 @@ const ShowStatusContainer = Styled.span`
 `;
 
 const ShowHeader = props => {
-  let ShowHeader = _ShowHeader, showName = "", showStatus = "";
+  let ShowHeader = _ShowHeader,
+    showName = "",
+    showStatus = "";
   const { showInfo: show } = props;
   if (show && show.hasOwnProperty("image")) {
     const { image: { medium }, status, premiered, name } = show;
@@ -110,7 +112,9 @@ const ShowHeader = props => {
             {show.hasOwnProperty("image") &&
               <ShowHeaderTitle>
                 {showName}
-                <ShowStatusContainer> ({showStatus})</ShowStatusContainer>
+                <ShowStatusContainer>
+                  {" "}({showStatus})
+                </ShowStatusContainer>
               </ShowHeaderTitle>}
           </ShowHeaderTitleContainer>
           <ShowHeaderOpsContainer>
