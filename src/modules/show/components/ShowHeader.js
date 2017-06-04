@@ -87,6 +87,9 @@ const ShowStatusContainer = Styled.span`
   font-weight: 200;
 `;
 
+const ShowNameText = Styled.span``;
+const ShowStatusText = ShowNameText.extend``;
+
 const ShowHeader = props => {
   let ShowHeader = _ShowHeader,
     showName = "",
@@ -111,9 +114,11 @@ const ShowHeader = props => {
           <ShowHeaderTitleContainer>
             {show.hasOwnProperty("image") &&
               <ShowHeaderTitle>
-                {showName}
+                <ShowNameText className="show-name">{showName}</ShowNameText>
                 <ShowStatusContainer>
-                  {" "}({showStatus})
+                  (<ShowStatusText className="show-status">
+                    {showStatus}
+                  </ShowStatusText>)
                 </ShowStatusContainer>
               </ShowHeaderTitle>}
           </ShowHeaderTitleContainer>
