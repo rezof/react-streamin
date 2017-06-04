@@ -198,7 +198,7 @@ const show = {
   }
 };
 
-describe("ShowContent test", () => {
+describe("ShowContent tests", () => {
   it("is loading", () => {
     const showState = {
       loading_data: true
