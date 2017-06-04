@@ -41,9 +41,9 @@ export const EpisodesList = (props: propsType) => {
   return (
     <ListContainer>
       {EpisodeListHeader()}
-      {data.map((episode, index) =>
-        <EpisodeListItem key={index} data={episode} />
-      )}
+      {data.map((episode, index) => {
+        return <EpisodeListItem key={index} data={episode} />;
+      })}
     </ListContainer>
   );
 };
@@ -84,7 +84,7 @@ export const EpisodeListItem = props => {
     }
   `;
   return (
-    <Container>
+    <Container className={`episode-item-wrapper episode-item-${number}`}>
       <EpisodeNumberContainer>
         <Text className="episode-num">
           {number}

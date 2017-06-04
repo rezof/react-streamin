@@ -102,9 +102,14 @@ export const SeasonListItem = (props: SeasonListItemPropsType) => {
       background-color: rgba(255, 255, 255, 0.05);
     }
   `;
-
   return (
-    <Container onClick={() => clickHandler(index)}>
+    <Container
+      className={`season-item-wrapper season-item-${index} ${selectedSeason ===
+        index
+        ? "active"
+        : ""}`}
+      onClick={() => clickHandler(index)}
+    >
       <SeasonNumberContainer>
         <Text>
           {index}
