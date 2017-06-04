@@ -3,6 +3,7 @@ import React, { PureComponent } from "react";
 import Styled from "styled-components";
 
 import ContentTemplate from "../../../components/ContentTemplate";
+import { Loading } from "../../../components/LoadingStatus";
 
 import SeasonsList from "./SeasonsList";
 import EpisodesList from "./EpisodesList";
@@ -12,12 +13,6 @@ import type { stateType as showStateType, showDetailsType } from "../ShowState";
 
 const ContentWrapper = Styled.div`
   min-height: calc(100vh - 50px);
-`;
-
-const LoadingData = Styled.p`
-  width: 100%;
-  text-align: center;
-  color: white;
 `;
 
 const ShowContentBody = Styled.div`
@@ -81,7 +76,7 @@ class ShowContent extends PureComponent {
     const { showState: { loading_data, show } } = this.props;
     let content = null;
     if (loading_data) {
-      content = <LoadingData>loading...</LoadingData>;
+      content = <Loading />;
     } else if (
       show.hasOwnProperty("episodes") &&
       typeof show.episodes == "object" &&

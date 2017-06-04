@@ -5,6 +5,7 @@ import Styled from "styled-components";
 import ContentTemplate from "../../../components/ContentTemplate";
 import HomeHeader from "./HomeHeader";
 import HomeContentItem from "./HomeContentItem";
+import { Loading } from "../../../components/LoadingStatus";
 
 import type { showType, stateType } from "../HomeState";
 
@@ -14,12 +15,6 @@ const ItemsList = Styled.div`
     flex-wrap: wrap;
     min-height: 100vh;
     min-width: 80%;
-`;
-
-const LoadingData = Styled.p`
-  width: 100%;
-  text-align: center;
-  color: white;
 `;
 
 type propsType = stateType;
@@ -35,7 +30,7 @@ class HomeContent extends PureComponent {
     const { data, loading_data } = this.props;
     let content = null;
     if (loading_data) {
-      content = <LoadingData>loading...</LoadingData>;
+      content = <Loading />;
     } else {
       content = data.map(item => <HomeContentItem key={item.id} item={item} />);
     }
