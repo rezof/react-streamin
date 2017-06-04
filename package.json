@@ -1,6 +1,6 @@
 {
   "name": "streamin",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "private": true,
   "dependencies": {
     "react": "^15.5.4",
@@ -9,20 +9,22 @@
     "react-redux": "^5.0.5",
     "react-router-dom": "^4.1.1",
     "redux": "^3.6.0",
-    "redux-logger": "^3.0.6",
-    "redux-loop": "^2.2.2",
     "redux-loop-symbol-ponyfill": "^2.2.2",
     "styled-components": "^2.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-preset-flow": "^6.23.0",
+    "chai": "^4.0.1",
+    "enzyme": "^2.8.2",
     "flow": "^0.2.3",
     "flow-bin": "^0.47.0",
     "husky": "^0.13.4",
     "lint-staged": "^3.6.0",
     "prettier": "^1.4.1",
-    "react-scripts": "1.0.6"
+    "react-addons-test-utils": "^15.5.1",
+    "react-scripts": "1.0.6",
+    "redux-logger": "^3.0.6"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -31,11 +33,10 @@
     "eject": "react-scripts eject",
     "precommit": "lint-staged"
   },
-  "lint-staged":{
+  "lint-staged": {
     "*.js": [
       "prettier --write",
       "git add"
     ]
   }
-
 }
