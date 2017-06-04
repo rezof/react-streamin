@@ -7,7 +7,7 @@ const SHOW_DATA_LOADED = "SHOW_DATA_LOADED";
 const SHOW_LOAD_DATA_FAILED = "SHOW_LOAD_DATA_FAILED";
 const SHOW_DETAILS_LOADED = "SHOW_DETAILS_LOADED";
 
-const formatShowEpisode = data => {
+export const formatShowEpisode = data => {
   return data.reduce(function(acc, curr) {
     if (acc.hasOwnProperty(curr.season)) {
       acc[curr.season].push(curr);
