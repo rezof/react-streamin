@@ -14,6 +14,8 @@ class App extends Component {
         <Router>
           <div>
             <Route path="/" exact component={Home} />
+            <Route path="/tv" component={Home} />
+            <Route path="/movies" exact component={() => null} />
             <Route path="/show/:id" component={Show} />
             <Route path="/hi" component={Home} />
           </div>
