@@ -11,14 +11,16 @@ const SideBarWrapper = Styled.div`
 
 class LeftSideBar extends PureComponent {
   render() {
+    const { location: { pathname } } = this.props;
     return (
       <SideBarWrapper>
         <LeftSideBarSection
+          location={pathname}
           title="Main"
           items={[
-            { title: "Movies" },
-            { title: "tv Shows" },
-            { title: "Tv Schedule" }
+            { title: "Movies", to: "/" },
+            { title: "tv Shows", to: "/tv" },
+            { title: "Tv Schedule", to: "schedule" }
           ]}
           selected="movies"
         />

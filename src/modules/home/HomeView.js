@@ -31,11 +31,15 @@ class Home extends PureComponent {
   }
 
   render() {
-    const { homeState: { data, loading_data } } = this.props;
+    const { homeState: { data, loading_data }, location } = this.props;
     return (
       <ContentWrapper>
         <Header />
-        <HomeContent data={data} loading_data={loading_data} />
+        <HomeContent
+          location={location}
+          data={data}
+          loading_data={loading_data}
+        />
       </ContentWrapper>
     );
   }

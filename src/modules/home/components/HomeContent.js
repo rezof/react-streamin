@@ -27,7 +27,7 @@ class HomeContent extends PureComponent {
   }
 
   render() {
-    const { data, loading_data } = this.props;
+    const { data, loading_data, location } = this.props;
     let content = null;
     if (loading_data) {
       content = <Loading />;
@@ -35,7 +35,7 @@ class HomeContent extends PureComponent {
       content = data.map(item => <HomeContentItem key={item.id} item={item} />);
     }
     return (
-      <ContentTemplate>
+      <ContentTemplate location={location}>
         <HomeHeader />
         <ItemsList>
           {content}

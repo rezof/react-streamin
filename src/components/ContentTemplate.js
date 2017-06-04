@@ -12,10 +12,10 @@ const ContentWrapper = Styled.div`
 `;
 
 export default props => {
-  const { children } = props;
+  const { children, location } = props;
   return (
     <Container>
-      <LeftSideBar />
+      <LeftSideBar location={location} />
       <ContentWrapper>
         {children}
       </ContentWrapper>
