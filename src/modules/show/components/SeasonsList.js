@@ -34,7 +34,7 @@ const SeasonsListHeader = () =>
     <SeasonArrowContainer />
   </SeasonItemContainer>;
 
-const SeasonsList = (props: SeasonsListPropsType) => {
+export const SeasonsList = (props: SeasonsListPropsType) => {
   const { data, seasonSelectionHandler, selectedSeason } = props;
   return (
     <ListContainer>
@@ -87,23 +87,21 @@ type SeasonListItemPropsType = {
   selectedSeason?: number
 };
 
-const SeasonListItem = (props: SeasonListItemPropsType) => {
+export const SeasonListItem = (props: SeasonListItemPropsType) => {
   const { index, clickHandler, selectedSeason } = props;
   let Container = SeasonItemContainer;
 
-  if (index !== 0) {
-    if (selectedSeason === index) {
-      // for some reason extend won't work
-      Container = Styled(Container)`
-        background-color: rgba(255, 255, 255, 0.05);
-      `;
-    }
-    Container = Container.extend`
-      &:hover {
-        background-color: rgba(255, 255, 255, 0.05);
-      }
+  if (selectedSeason === index) {
+    // for some reason extend won't work
+    Container = Styled(Container)`
+      background-color: rgba(255, 255, 255, 0.05);
     `;
   }
+  Container = Container.extend`
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+  `;
 
   return (
     <Container onClick={() => clickHandler(index)}>
@@ -114,7 +112,7 @@ const SeasonListItem = (props: SeasonListItemPropsType) => {
       </SeasonNumberContainer>
       <SeasonNameContainer>
         <Text>
-          {`season ${parseInt(index) == 0 ? "#" : index}`}
+          season {index}
         </Text>
       </SeasonNameContainer>
       <SeasonArrowContainer>

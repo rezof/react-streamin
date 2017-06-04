@@ -42,12 +42,7 @@ export const EpisodesList = (props: propsType) => {
     <ListContainer>
       {EpisodeListHeader()}
       {data.map((episode, index) =>
-        <EpisodeListItem
-          hoverable
-          number={episode.number}
-          key={index}
-          data={episode}
-        />
+        <EpisodeListItem key={index} data={episode} />
       )}
     </ListContainer>
   );
@@ -82,30 +77,26 @@ const EpisodeArrowContainer = Styled.div`
 `;
 
 export const EpisodeListItem = props => {
-  const { data: { name }, number } = props;
-  let Container = EpisodeItemContainer;
-  if (props.hasOwnProperty("hoverable")) {
-    Container = Container.extend`
-      &:hover {
-        background-color: rgba(255, 255, 255, 0.05);
-      }
-    `;
-  }
-
+  const { data: { name, number } } = props;
+  let Container = EpisodeItemContainer.extend`
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+  `;
   return (
     <Container>
       <EpisodeNumberContainer>
-        <Text>
+        <Text className="episode-num">
           {number}
         </Text>
       </EpisodeNumberContainer>
       <EpisodeNameContainer>
-        <Text>
+        <Text className="episode-name">
           {name}
         </Text>
       </EpisodeNameContainer>
       <EpisodeArrowContainer>
-        <RightArrowIcon size={24} />
+        <RightArrowIcon className="right-arrow-icon" size={24} />
       </EpisodeArrowContainer>
     </Container>
   );
