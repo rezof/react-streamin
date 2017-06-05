@@ -2,7 +2,6 @@
 import React, { PureComponent } from "react";
 import Styled from "styled-components";
 
-import ContentTemplate from "../../../components/ContentTemplate";
 import { Loading } from "../../../components/LoadingStatus";
 
 import SeasonsList from "./SeasonsList";
@@ -103,26 +102,25 @@ class ShowContent extends PureComponent {
   }
 
   render() {
-    const { showState: { show } } = this.props;
+    const { showState: { show }, location } = this.props;
+    // lift ContentTemplate to showView
     return (
-      <ContentTemplate>
-        <ContentWrapper>
-          <ShowHeader showInfo={show} />
-          <ShowContentBody>
-            <ShowContentWrapper>
-              {this.renderShowContent()}
-            </ShowContentWrapper>
-            {/*
-            <ShowExpandContent>
-                <ShowExpandContentText>
-                  Expand
-                </ShowExpandContentText>
+      <ContentWrapper>
+        <ShowHeader showInfo={show} />
+        <ShowContentBody>
+          <ShowContentWrapper>
+            {this.renderShowContent()}
+          </ShowContentWrapper>
+          {/*
+          <ShowExpandContent>
+              <ShowExpandContentText>
+                Expand
+              </ShowExpandContentText>
 
-            </ShowExpandContent>
-            */}
-          </ShowContentBody>
-        </ContentWrapper>
-      </ContentTemplate>
+          </ShowExpandContent>
+          */}
+        </ShowContentBody>
+      </ContentWrapper>
     );
   }
 }

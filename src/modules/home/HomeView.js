@@ -1,9 +1,10 @@
 // @flow
-
 import React, { PureComponent } from "react";
 import Styled from "styled-components";
 import Header from "../header/headerView";
 import HomeContent from "./components/HomeContent";
+
+import ContentTemplate from "../../components/ContentTemplate";
 
 import type { stateType } from "./HomeState";
 
@@ -35,11 +36,9 @@ class Home extends PureComponent {
     return (
       <ContentWrapper>
         <Header />
-        <HomeContent
-          location={location}
-          data={data}
-          loading_data={loading_data}
-        />
+        <ContentTemplate location={location}>
+          <HomeContent data={data} loading_data={loading_data} />
+        </ContentTemplate>
       </ContentWrapper>
     );
   }

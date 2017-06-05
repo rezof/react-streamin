@@ -6,6 +6,8 @@ import Styled from "styled-components";
 import Header from "../header/headerView";
 import ShowContent from "./components/ShowContent";
 
+import ContentTemplate from "../../components/ContentTemplate";
+
 import type { stateType } from "./showState";
 
 const showContainer = Styled.div`
@@ -36,17 +38,22 @@ class Show extends PureComponent {
   componentDidMount() {
     const {
       match: { params: { id: showId } },
-      actions: { load_show_data }
+      actions: { load_show_data },
+      location,
+      showState: { show: { id } }
     } = this.props;
-    load_show_data(showId);
+    // TODO check of show in shows object
+    if (showId != id) load_show_data(showId);
   }
 
   render() {
-    const { showState } = this.props;
+    const { showState, location } = this.props;
     return (
       <ContentWrapper>
         <Header />
-        <ShowContent showState={showState} />
+        <ContentTemplate>
+          <ShowContent location={location} showState={showState} />
+        </ContentTemplate>
       </ContentWrapper>
     );
   }

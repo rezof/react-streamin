@@ -2,7 +2,6 @@
 import React, { PureComponent } from "react";
 import Styled from "styled-components";
 
-import ContentTemplate from "../../../components/ContentTemplate";
 import HomeHeader from "./HomeHeader";
 import HomeContentItem from "./HomeContentItem";
 import { Loading } from "../../../components/LoadingStatus";
@@ -17,6 +16,10 @@ const ItemsList = Styled.div`
     min-width: 80%;
 `;
 
+const ContentWrapper = Styled.div`
+  flex: 1;
+`;
+
 type propsType = stateType;
 
 class HomeContent extends PureComponent {
@@ -27,7 +30,7 @@ class HomeContent extends PureComponent {
   }
 
   render() {
-    const { data, loading_data, location } = this.props;
+    const { data, loading_data } = this.props;
     let content = null;
     if (loading_data) {
       content = <Loading />;
@@ -35,12 +38,12 @@ class HomeContent extends PureComponent {
       content = data.map(item => <HomeContentItem key={item.id} item={item} />);
     }
     return (
-      <ContentTemplate location={location}>
+      <ContentWrapper>
         <HomeHeader />
         <ItemsList>
           {content}
         </ItemsList>
-      </ContentTemplate>
+      </ContentWrapper>
     );
   }
 }
