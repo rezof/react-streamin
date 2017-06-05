@@ -40,19 +40,24 @@ class Show extends PureComponent {
       match: { params: { id: showId } },
       actions: { load_show_data },
       location,
-      showState: { show: { id } }
+      showState: { shows }
     } = this.props;
-    // TODO check of show in shows object
-    if (showId != id) load_show_data(showId);
+    if (!shows.hasOwnProperty(showId)) load_show_data(showId);
   }
 
   render() {
-    const { showState, location } = this.props;
+    const {
+      showState: { loading_data, shows },
+      location,
+      match: { params: { id: showId } }
+    } = this.props;
+    let show = {};
+    if (shows.hasOwnProperty(showId)) show = shows[showId];
     return (
       <ContentWrapper>
         <Header />
         <ContentTemplate>
-          <ShowContent location={location} showState={showState} />
+          <ShowContent location={location} showState={{ loading_data, show }} />
         </ContentTemplate>
       </ContentWrapper>
     );

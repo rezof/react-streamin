@@ -22,7 +22,7 @@ const fetch_show_data = ({ id }: { id: number }) => {
   return fetch(`http://api.tvmaze.com/shows/${id}/episodes`)
     .then(r => r.json())
     .then(formatShowEpisode)
-    .then(show_data_loaded)
+    .then(show_data_loaded.bind(null, id))
     .catch(show_data_load_failed);
 };
 
@@ -82,11 +82,12 @@ type showDataLoadedActionType = {
 };
 
 export const show_data_loaded = (
+  id: number,
   data: Array<showEpisodeType>
 ): showDataLoadedActionType => {
   return {
     type: SHOW_DATA_LOADED,
-    payload: data
+    payload: { id, data }
   };
 };
 
@@ -103,13 +104,13 @@ export const show_data_load_failed = (): showDataLoadFailedActionType => {
 export type stateType = {
   loading_data: boolean,
   loading_data_failed: boolean,
-  show: showDetailsType
+  shows: Object
 };
 
 const initialState = {
   loading_data: true,
   loading_data_failed: false,
-  show: {}
+  shows: {}
 };
 
 type ActionType = {
@@ -132,21 +133,25 @@ const ShowStateReducer = (
         Effects.promise(fetch_show_details, payload)
       );
     case SHOW_DETAILS_LOADED:
+      const { id } = payload;
+      const shows = Object.create({}, state.shows);
+      shows[id] = payload;
       return loop(
         {
           ...state,
-          show: payload
+          shows
         },
-        Effects.promise(fetch_show_data, payload)
+        Effects.promise(fetch_show_data, { id })
       );
     case SHOW_DATA_LOADED:
+      const current_shows = Object.assign({}, state.shows);
+      const _show = current_shows[payload.id];
+      const show = Object.assign({}, { ..._show }, { episodes: payload.data });
+      current_shows[payload.id] = show;
       return {
         ...state,
         loading_data: false,
-        show: {
-          ...state.show,
-          episodes: payload
-        }
+        shows: current_shows
       };
     case SHOW_LOAD_DATA_FAILED:
       return {

@@ -103,7 +103,6 @@ class ShowContent extends PureComponent {
 
   render() {
     const { showState: { show }, location } = this.props;
-    // lift ContentTemplate to showView
     return (
       <ContentWrapper>
         <ShowHeader showInfo={show} />
