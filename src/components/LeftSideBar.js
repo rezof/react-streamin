@@ -1,3 +1,4 @@
+// @flow
 import React, { PureComponent } from "react";
 import Styled from "styled-components";
 
@@ -9,13 +10,28 @@ const SideBarWrapper = Styled.div`
   border-right: 1px solid #2f3241;
 `;
 
+type propsType = {
+  location: {
+    pathname: string
+  }
+};
+
+const defaultProps = {
+  location: {
+    pathname: ""
+  }
+};
+
 class LeftSideBar extends PureComponent {
+  props: propsType;
+  static defaultProps = defaultProps;
+
   render() {
-    const { location: { pathname } } = this.props;
+    const { location } = this.props;
     return (
       <SideBarWrapper>
         <LeftSideBarSection
-          location={pathname}
+          location={location.pathname}
           title="Main"
           items={[
             { title: "Movies", to: "/" },
