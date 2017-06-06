@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 
 import Home from "./home/HomeContainer";
 import Show from "./show/ShowContainer";
+import Movies from "./movies/MoviesContainer";
 
 import store from "../store/store";
 
@@ -15,9 +16,8 @@ class App extends Component {
           <div>
             <Route path="/" exact component={Home} />
             <Route path="/tv" component={Home} />
-            <Route path="/movies" exact component={() => null} />
+            <Route path="/movies" component={Movies} />
             <Route path="/show/:id" component={Show} />
-            <Route path="/hi" component={Home} />
           </div>
         </Router>
       </Provider>
