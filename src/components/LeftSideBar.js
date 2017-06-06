@@ -36,7 +36,7 @@ class LeftSideBar extends PureComponent {
           items={[
             { title: "tv Shows", to: "/" },
             { title: "Movies", to: "/movies" },
-            { title: "Tv Schedule", to: "schedule" }
+            { title: "Tv Schedule", to: "/schedule" }
           ]}
           selected="movies"
         />
