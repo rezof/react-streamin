@@ -10,10 +10,6 @@ import ContentTemplate from "../../components/ContentTemplate";
 
 import type { stateType } from "./showState";
 
-const showContainer = Styled.div`
-
-`;
-
 const ContentWrapper = Styled.div`
   width: 100vw;
   min-height: 100vh;

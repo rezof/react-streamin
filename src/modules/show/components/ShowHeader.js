@@ -85,6 +85,7 @@ const ShowStatusContainer = Styled.span`
   font-size: 12px;
   color: white;
   font-weight: 200;
+  margin-left: 10px;
 `;
 
 const ShowNameText = Styled.span``;
