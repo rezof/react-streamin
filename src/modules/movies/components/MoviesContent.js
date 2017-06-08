@@ -23,23 +23,48 @@ const ItemWrapper = Styled.div`
 class MoviesContent extends PureComponent {
   constructor(props) {
     super(props);
-    this.state = {
-      selectedTab: "latest"
-    };
+    this.state = {};
     this.renderContent = this.renderContent.bind(this);
     this.headerTabs = this.headerTabs.bind(this);
   }
+
+  componentWillReceiveProps(nextProps) {
+    const {
+      moviesState: {
+        selectedTab,
+        movies,
+        loading_latest_movies,
+        loading_upcoming_movies
+      },
+      actions: { load_latest_movies_action, load_upcoming_movies_action }
+    } = nextProps;
+    if (
+      !movies[selectedTab] ||
+      (typeof movies[selectedTab] === "object" &&
+        movies[selectedTab].length === 0)
+    ) {
+      if (selectedTab === "latest" && !loading_latest_movies)
+        load_latest_movies_action();
+      else if (selectedTab === "upcoming" && !loading_upcoming_movies) {
+        load_upcoming_movies_action();
+        console.log("load_upcoming_movies_action");
+      }
+    }
+  }
+
   renderContent() {
     const {
-      moviesState: { loading_upcoming_movies, loading_latest_movies, movies }
+      moviesState: {
+        selectedTab,
+        loading_upcoming_movies,
+        loading_latest_movies,
+        movies
+      }
     } = this.props;
-    const { selectedTab } = this.state;
     let content = null;
     if (
-      (this.state.selectedTab.toLowerCase() === "latest" &&
-        loading_latest_movies) ||
-      (this.state.selectedTab.toLowerCase() === "upcoming" &&
-        loading_upcoming_movies)
+      (selectedTab.toLowerCase() === "latest" && loading_latest_movies) ||
+      (selectedTab.toLowerCase() === "upcoming" && loading_upcoming_movies)
     ) {
       content = <Loading />;
     } else if (
@@ -55,24 +80,8 @@ class MoviesContent extends PureComponent {
   }
 
   displayMoviesChanged(key) {
-    const {
-      moviesState: { movies },
-      actions: { load_latest_movies_action, load_upcoming_movies_action }
-    } = this.props;
-    this.setState({ selectedTab: key.toLowerCase() }, () => {
-      const { selectedTab } = this.state;
-      if (
-        selectedTab === "latest" &&
-        (!movies["latest"] || !movies["latest"].length)
-      ) {
-        load_latest_movies_action();
-      } else if (
-        selectedTab === "upcoming" &&
-        (!movies["upcoming"] || !movies["upcoming"].length)
-      ) {
-        load_upcoming_movies_action();
-      }
-    });
+    const { actions: { change_selected_tab_action } } = this.props;
+    change_selected_tab_action(key.toLowerCase());
   }
 
   headerTabs() {
@@ -81,8 +90,8 @@ class MoviesContent extends PureComponent {
       Upcoming: this.displayMoviesChanged.bind(this, "Upcoming"),
       "Top Rated": this.displayMoviesChanged.bind(this, "Top Rated")
     };
-
-    return <Header tabs={tabs} active={this.state.selectedTab} />;
+    const { moviesState: { loading_data, movies, selectedTab } } = this.props;
+    return <Header tabs={tabs} active={selectedTab} />;
   }
 
   render() {

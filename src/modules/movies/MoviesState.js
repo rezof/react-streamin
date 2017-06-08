@@ -7,6 +7,7 @@ const LOAD_TOP_RATED_MOVIES = "LOAD_TOP_RATED_MOVIES";
 const LATEST_MOVIES_LOADED = "LATEST_MOVIES_LOADED";
 const UPCOMING_MOVIES_LOADED = "UPCOMING_MOVIES_LOADED";
 const MOVIES_LOADING_FAILED = "MOVIES_LOADING_FAILED";
+const CHANGE_SELECTED_TAB = "CHANGE_SELECTED_TAB";
 
 const load_latest_movies = () => {
   return fetch(
@@ -50,6 +51,11 @@ export const movies_loaded_action = (type, payload): ActionType => ({
   payload
 });
 
+export const change_selected_tab_action = payload => ({
+  type: CHANGE_SELECTED_TAB,
+  payload
+});
+
 type StateType = {
   loading_data: boolean,
   loading_failed: boolean,
@@ -57,6 +63,7 @@ type StateType = {
 };
 
 const initialState = {
+  selectedTab: "latest",
   loading_latest_movies: false,
   loading_upcoming_movies: false,
   loading_latest_movies_failed: false,
@@ -69,11 +76,17 @@ const MoviesReducer = (
   { type, payload }: ActionType
 ) => {
   switch (type) {
+    case CHANGE_SELECTED_TAB:
+      return {
+        ...state,
+        selectedTab: payload
+      };
     case LOAD_LATEST_MOVIES:
       return loop(
         {
           ...state,
-          loading_latest_movies: true
+          loading_latest_movies: true,
+          loading_latest_movies_failed: false
         },
         Effects.promise(load_latest_movies)
       );
@@ -81,7 +94,7 @@ const MoviesReducer = (
       return loop(
         {
           ...state,
-          loading_upcoming_movies: false,
+          loading_upcoming_movies: true,
           loading_upcoming_movies_failed: false
         },
         Effects.promise(load_upcoming_movies)
