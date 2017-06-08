@@ -22,6 +22,7 @@ const HomeTab = Styled.div`
   display: inline-block;
   letter-spacing: 1px;
   border: 2px solid transparent;
+  cursor: pointer;
   color: ${props => (props.active ? "white" : "#6f7687")};
   border-bottom-color: ${props => (props.active ? "#199782" : "transparent")};
 `;
@@ -36,15 +37,23 @@ const HomeHeaderSeparator = Styled.div`
   border-bottom: 2px solid #2f3241;
 `;
 
-export default () =>
+export default ({ tabs, active }) =>
   <HomeHeaderWrapper>
     <BrowseTitle>
       Movies
     </BrowseTitle>
     <HomeTabs>
-      <HomeTab active>Latest</HomeTab>
-      <HomeTab>Trending</HomeTab>
-      <HomeTab>New</HomeTab>
+      {Object.keys(tabs).map(key => {
+        return (
+          <HomeTab
+            key={key}
+            onClick={tabs[key]}
+            active={active.toLowerCase() === key.toLowerCase() ? true : false}
+          >
+            {key}
+          </HomeTab>
+        );
+      })}
     </HomeTabs>
     <HomeHeaderSeparator />
   </HomeHeaderWrapper>;

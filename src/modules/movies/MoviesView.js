@@ -15,16 +15,16 @@ const ContentWrapper = Styled.div`
 
 class MoviesView extends PureComponent {
   componentDidMount() {
-    const { actions: { load_movies_action } } = this.props;
-    // load_movies_action();
+    const { actions: { load_latest_movies_action } } = this.props;
+    load_latest_movies_action();
   }
   render() {
-    const { location, moviesState } = this.props;
+    const { location, moviesState, actions } = this.props;
     return (
       <ContentWrapper>
         <Header />
         <ContentTemplate location={location}>
-          <MoviesContent moviesState={moviesState} />
+          <MoviesContent moviesState={moviesState} actions={actions} />
         </ContentTemplate>
       </ContentWrapper>
     );
