@@ -5,6 +5,7 @@ import LeftSideBar from "./LeftSideBar";
 
 const Container = Styled.div`
   display: flex;
+  background-color: #393d4c;
 `;
 
 const ContentWrapper = Styled.div`
