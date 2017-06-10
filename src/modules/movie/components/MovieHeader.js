@@ -1,6 +1,46 @@
 import React, { PureComponent } from "react";
 import Styled from "styled-components";
 
+import icons from "../../../assets/icons";
+
+const { heart, bookmark, star } = icons;
+
+const Heart = Styled(heart)`
+  padding: 8px;
+  border: 1px solid #fefefe;
+  border-radius: 22px;
+  margin-right: 15px;
+  color: #fefefe;
+  background-color: rgba(0, 0, 0, 0.2);
+  &:hover {
+    border-color: rgba(0, 0, 0, 0.2);
+  }
+`;
+
+const Bookmark = Styled(bookmark)`
+  padding: 8px;
+  border: 1px solid white;
+  border-radius: 22px;
+  margin-right: 15px;
+  color: #fefefe;
+  background-color: rgba(0, 0, 0, 0.2);
+  &:hover {
+    border-color: rgba(0, 0, 0, 0.2);
+  }
+`;
+
+const Star = Styled(star)`
+  padding: 8px;
+  border: 1px solid white;
+  border-radius: 22px;
+  margin-right: 15px;
+  color: #fefefe;
+  background-color: rgba(0, 0, 0, 0.2);
+  &:hover {
+    border-color: rgba(0, 0, 0, 0.2);
+  }
+`;
+
 const HeaderWrapper = Styled.div`
     flex: 1;
     height: 45vh;
@@ -41,7 +81,6 @@ const MovieTitleContainer = Styled.div`
 const MovieTitle = Styled.h1`
   font-weight: bold;
   color: lightgrey;
-  padding: 20px 10px 10px 0;
   display: inline-block;
 `;
 
@@ -102,6 +141,15 @@ const MovieDetailsGenre = Styled.span`
   border-radius: 5px;
 `;
 
+const MovieOpsContainer = Styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+const MovieOpBtn = Styled.div`
+
+`;
+
 class MovieHeader extends PureComponent {
   constructor(props) {
     super(props);
@@ -130,6 +178,11 @@ class MovieHeader extends PureComponent {
           <MovieReleaseYear>
             ({release_date.substring(0, 4)})
           </MovieReleaseYear>
+          <MovieOpsContainer>
+            <Heart size={20} />
+            <Bookmark size={20} />
+            <Star size={20} />
+          </MovieOpsContainer>
           <MovieOverview>
             <MovieLabel>Overview</MovieLabel>
             <MovieOverviewText>
