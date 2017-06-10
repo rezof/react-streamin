@@ -6,6 +6,9 @@ import plus from "react-icons/lib/md/add";
 import more from "react-icons/lib/md/keyboard-control";
 import play from "react-icons/lib/md/play-arrow";
 import right_arrow from "react-icons/lib/md/keyboard-arrow-right";
+import heart from "react-icons/lib/fa/heart";
+import bookmark from "react-icons/lib/fa/bookmark";
+import star from "react-icons/lib/fa/star";
 
 const icons = {
   movies: movies,
@@ -15,7 +18,10 @@ const icons = {
   plus,
   more,
   play,
-  right_arrow
+  right_arrow,
+  heart,
+  bookmark,
+  star
 };
 
 export default icons;
