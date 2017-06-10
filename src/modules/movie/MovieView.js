@@ -14,7 +14,7 @@ const MovieContainer = Styled.div`
 
 const MovieContent = Styled.div`
   flex: 1;
-  min-height: 100vh;
+  min-height: 55vh;
 `;
 
 class MovieView extends PureComponent {
