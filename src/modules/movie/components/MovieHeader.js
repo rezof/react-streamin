@@ -87,6 +87,7 @@ const MovieTitle = Styled.h1`
 const MovieReleaseYear = Styled.h2`
   display: inline-block;
   color: rgba(211, 211, 211, 0.32);
+  margin-left: 10px;
 `;
 
 const MovieOverview = Styled.div`
