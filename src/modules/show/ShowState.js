@@ -133,6 +133,11 @@ const ShowStateReducer = (
         Effects.promise(fetch_show_details, payload)
       );
     case SHOW_DETAILS_LOADED:
+      if (!(payload && payload.hasOwnProperty("id"))) {
+        return {
+          ...state
+        };
+      }
       const { id } = payload;
       const shows = Object.create({}, state.shows);
       shows[id] = payload;
@@ -144,6 +149,18 @@ const ShowStateReducer = (
         Effects.promise(fetch_show_data, { id })
       );
     case SHOW_DATA_LOADED:
+      if (
+        !(
+          payload &&
+          payload.hasOwnProperty("data") &&
+          payload.hasOwnProperty("id")
+        )
+      ) {
+        return {
+          ...state,
+          loading_data: false
+        };
+      }
       const current_shows = Object.assign({}, state.shows);
       const _show = current_shows[payload.id];
       const show = Object.assign({}, { ..._show }, { episodes: payload.data });

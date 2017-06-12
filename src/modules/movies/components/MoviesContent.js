@@ -1,5 +1,8 @@
+// @flow
 import React, { PureComponent } from "react";
 import Styled from "styled-components";
+
+import { StateType } from "../MoviesState";
 
 import { Loading } from "../../../components/LoadingStatus";
 
@@ -20,7 +23,17 @@ const ItemWrapper = Styled.div`
     min-width: 80%;
 `;
 
+type propsType = {
+  moviesState: StateType,
+  actions: {
+    load_latest_movies_action: Function,
+    load_upcoming_movies_action: Function
+  }
+};
+
 class MoviesContent extends PureComponent {
+  props: propsType;
+
   constructor(props) {
     super(props);
     this.state = {};
@@ -47,7 +60,6 @@ class MoviesContent extends PureComponent {
         load_latest_movies_action();
       else if (selectedTab === "upcoming" && !loading_upcoming_movies) {
         load_upcoming_movies_action();
-        console.log("load_upcoming_movies_action");
       }
     }
   }
@@ -79,7 +91,7 @@ class MoviesContent extends PureComponent {
     return content;
   }
 
-  displayMoviesChanged(key) {
+  displayMoviesChanged(key: string) {
     const { actions: { change_selected_tab_action } } = this.props;
     change_selected_tab_action(key.toLowerCase());
   }

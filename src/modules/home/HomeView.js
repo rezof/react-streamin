@@ -18,7 +18,8 @@ type propType = {
   actions: {
     load_data: Function
   },
-  homeState: stateType
+  homeState: stateType,
+  location: Object
 };
 
 class Home extends PureComponent {

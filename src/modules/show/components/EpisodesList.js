@@ -76,7 +76,14 @@ const EpisodeArrowContainer = Styled.div`
   color: rgba(255, 255, 255, 0.2);
 `;
 
-export const EpisodeListItem = props => {
+type EpisodeListItemPropsType = {
+  data: {
+    name: string,
+    number: number
+  }
+};
+
+export const EpisodeListItem = (props: EpisodeListItemPropsType) => {
   const { data: { name, number } } = props;
   let Container = EpisodeItemContainer.extend`
     &:hover {

@@ -47,7 +47,8 @@ const ShowContentWrapper = Styled.div`
 // `;
 
 type propsType = {
-  showState: showStateType
+  showState: showStateType,
+  location: Object
 };
 
 type stateType = {

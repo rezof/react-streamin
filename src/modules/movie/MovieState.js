@@ -6,10 +6,10 @@ const MOVIE_DETAILS_LOADED = "MOVIE_DETAILS_LOADED";
 
 type actionType = {
   type: string,
-  payload?: Object | int
+  payload?: Object | number
 };
 
-const load_movie_details = (id: int) => {
+const load_movie_details = (id: number) => {
   return fetch(
     `https://api.themoviedb.org/3/movie/${id}?api_key=571f89e8e2fdb653f0b2bb281fa8f241`
   )
@@ -18,12 +18,12 @@ const load_movie_details = (id: int) => {
     .catch();
 };
 
-export const load_movie_details_action = (id: int): actionType => ({
+export const load_movie_details_action = (id: number): actionType => ({
   type: LOAD_MOVIE_DETAILS,
   payload: id
 });
 
-export const movie_details_loaded = (data): actionType => ({
+export const movie_details_loaded = (data: movieDetailsType): actionType => ({
   type: MOVIE_DETAILS_LOADED,
   payload: data
 });
@@ -33,7 +33,7 @@ export type movieDetailsType = {
   adult: boolean,
   backdrop_path: string,
   budget: number,
-  genres: Array<string>,
+  genres: Array<{ id: number, name: string }>,
   title: string,
   overview: string,
   poster_path: string,
@@ -140,7 +140,7 @@ const InitialState = {
 
 const MovieStateReducer = (
   state: stateType = InitialState,
-  { type, payload }
+  { type, payload }: ActionType
 ): stateType => {
   switch (type) {
     case LOAD_MOVIE_DETAILS:

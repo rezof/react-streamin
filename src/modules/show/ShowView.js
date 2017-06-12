@@ -25,7 +25,8 @@ type propsType = {
   actions: {
     load_show_data: Function
   },
-  showState: stateType
+  showState: stateType,
+  location: Object
 };
 
 class Show extends PureComponent {

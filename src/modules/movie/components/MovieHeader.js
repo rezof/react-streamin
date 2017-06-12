@@ -161,7 +161,7 @@ type propsType = {
 class MovieHeader extends PureComponent {
   props: propsType;
 
-  renderMovieInfo(props) {
+  renderMovieInfo(props: propsType) {
     const {
       movie: { title, release_date, overview, runtime, budget, genres }
     } = props;
