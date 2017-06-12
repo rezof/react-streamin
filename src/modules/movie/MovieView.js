@@ -1,8 +1,11 @@
+// @flow
 import React, { PureComponent } from "react";
 import Styled from "styled-components";
 
 import ContentTemplate from "./../../components/ContentTemplate";
 import Header from "../header/headerView";
+
+import { stateType } from "./MovieState";
 
 import MovieHeader from "./components/MovieHeader";
 
@@ -17,7 +20,12 @@ const MovieContent = Styled.div`
   min-height: 55vh;
 `;
 
+type propsType = {
+  movieState: stateType
+};
+
 class MovieView extends PureComponent {
+  props: propsType;
   render() {
     const { movieState: { movie } } = this.props;
     return (

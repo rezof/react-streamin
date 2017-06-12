@@ -1,5 +1,8 @@
+// @flow
 import React, { PureComponent } from "react";
 import Styled from "styled-components";
+
+import { movieDetailsType } from "../MovieState";
 
 import icons from "../../../assets/icons";
 
@@ -151,16 +154,17 @@ const MovieOpBtn = Styled.div`
 
 `;
 
-class MovieHeader extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.renderMovieInfo = this.renderMovieInfo.bind(this);
-  }
+type propsType = {
+  movie: movieDetailsType
+};
 
-  renderMovieInfo() {
+class MovieHeader extends PureComponent {
+  props: propsType;
+
+  renderMovieInfo(props) {
     const {
       movie: { title, release_date, overview, runtime, budget, genres }
-    } = this.props;
+    } = props;
     const runTimeHours = parseInt(runtime / 60);
     const runTimeMinutes = Math.floor(runtime % 60);
     const budgetArray = String(budget).split("");
@@ -225,7 +229,7 @@ class MovieHeader extends PureComponent {
               src={`https://image.tmdb.org/t/p/w300_and_h450_bestv2/${poster_path}`}
             />
           </MoviePosterContainer>
-          {this.renderMovieInfo()}
+          {this.renderMovieInfo(this.props)}
         </HeaderContent>
       </HeaderWrapper>
     );

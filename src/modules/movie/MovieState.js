@@ -1,9 +1,15 @@
+// @flow
 import { loop, Effects } from "redux-loop-symbol-ponyfill";
 
 const LOAD_MOVIE_DETAILS = "LOAD_MOVIE_DETAILS";
 const MOVIE_DETAILS_LOADED = "MOVIE_DETAILS_LOADED";
 
-const load_movie_details = id => {
+type actionType = {
+  type: string,
+  payload?: Object | int
+};
+
+const load_movie_details = (id: int) => {
   return fetch(
     `https://api.themoviedb.org/3/movie/${id}?api_key=571f89e8e2fdb653f0b2bb281fa8f241`
   )
@@ -12,15 +18,33 @@ const load_movie_details = id => {
     .catch();
 };
 
-export const load_movie_details_action = id => ({
+export const load_movie_details_action = (id: int): actionType => ({
   type: LOAD_MOVIE_DETAILS,
   payload: id
 });
 
-export const movie_details_loaded = data => ({
+export const movie_details_loaded = (data): actionType => ({
   type: MOVIE_DETAILS_LOADED,
   payload: data
 });
+
+export type movieDetailsType = {
+  id: number,
+  adult: boolean,
+  backdrop_path: string,
+  budget: number,
+  genres: Array<string>,
+  title: string,
+  overview: string,
+  poster_path: string,
+  release_date: string,
+  runtime: number
+};
+
+export type stateType = {
+  loading_movie_details: boolean,
+  movie: movieDetailsType
+};
 
 const InitialState = {
   loading_movie_details: false,
@@ -114,7 +138,10 @@ const InitialState = {
   }
 };
 
-const MovieStateReducer = (state = InitialState, { type, payload }) => {
+const MovieStateReducer = (
+  state: stateType = InitialState,
+  { type, payload }
+): stateType => {
   switch (type) {
     case LOAD_MOVIE_DETAILS:
       return loop(
