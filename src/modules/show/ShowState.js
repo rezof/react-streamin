@@ -1,5 +1,4 @@
 // @flow
-
 import { loop, Effects } from "redux-loop-symbol-ponyfill";
 
 const LOAD_SHOW_DATA = "LOAD_SHOW_DATA";
@@ -7,7 +6,8 @@ const SHOW_DATA_LOADED = "SHOW_DATA_LOADED";
 const SHOW_LOAD_DATA_FAILED = "SHOW_LOAD_DATA_FAILED";
 const SHOW_DETAILS_LOADED = "SHOW_DETAILS_LOADED";
 
-export const formatShowEpisode = data => {
+// TODO Fix data param type
+export const formatShowEpisode = (data: Array<Object>): Object => {
   return data.reduce(function(acc, curr) {
     if (acc.hasOwnProperty(curr.season)) {
       acc[curr.season].push(curr);
@@ -78,7 +78,10 @@ export type showEpisodeType = {
 
 type showDataLoadedActionType = {
   type: string,
-  payload: Array<showEpisodeType>
+  payload: {
+    id: number,
+    data: Object
+  }
 };
 
 export const show_data_loaded = (

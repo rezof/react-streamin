@@ -47,7 +47,8 @@ const ShowContentWrapper = Styled.div`
 // `;
 
 type propsType = {
-  showState: showStateType,
+  show: showDetailsType,
+  isLoading: boolean,
   location: Object
 };
 
@@ -73,9 +74,9 @@ class ShowContent extends PureComponent {
   }
 
   renderShowContent() {
-    const { showState: { loading_data, show } } = this.props;
+    const { show, isLoading } = this.props;
     let content = null;
-    if (loading_data) {
+    if (isLoading) {
       content = <Loading />;
     } else if (
       show.hasOwnProperty("episodes") &&
@@ -103,7 +104,7 @@ class ShowContent extends PureComponent {
   }
 
   render() {
-    const { showState: { show }, location } = this.props;
+    const { show, location } = this.props;
     return (
       <ContentWrapper>
         <ShowHeader showInfo={show} />

@@ -54,7 +54,11 @@ class Show extends PureComponent {
       <ContentWrapper>
         <Header />
         <ContentTemplate>
-          <ShowContent location={location} showState={{ loading_data, show }} />
+          <ShowContent
+            location={location}
+            show={show}
+            isLoading={loading_data}
+          />
         </ContentTemplate>
       </ContentWrapper>
     );
