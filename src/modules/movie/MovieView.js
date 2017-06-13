@@ -5,7 +5,7 @@ import Styled from "styled-components";
 import ContentTemplate from "./../../components/ContentTemplate";
 import Header from "../header/headerView";
 
-import { stateType } from "./MovieState";
+import type { stateType } from "./MovieState";
 
 import MovieHeader from "./components/MovieHeader";
 

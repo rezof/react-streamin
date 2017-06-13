@@ -2,7 +2,7 @@
 import React, { PureComponent } from "react";
 import Styled from "styled-components";
 
-import { movieDetailsType } from "../MovieState";
+import type { movieDetailsType } from "../MovieState";
 
 import icons from "../../../assets/icons";
 

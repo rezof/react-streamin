@@ -6,7 +6,10 @@ const MOVIE_DETAILS_LOADED = "MOVIE_DETAILS_LOADED";
 
 type actionType = {
   type: string,
-  payload?: Object | number
+  payload: {
+    id?: number,
+    data?: Object
+  }
 };
 
 const load_movie_details = (id: number) => {
@@ -20,12 +23,12 @@ const load_movie_details = (id: number) => {
 
 export const load_movie_details_action = (id: number): actionType => ({
   type: LOAD_MOVIE_DETAILS,
-  payload: id
+  payload: { id }
 });
 
 export const movie_details_loaded = (data: movieDetailsType): actionType => ({
   type: MOVIE_DETAILS_LOADED,
-  payload: data
+  payload: { data }
 });
 
 export type movieDetailsType = {
@@ -43,7 +46,7 @@ export type movieDetailsType = {
 
 export type stateType = {
   loading_movie_details: boolean,
-  movie: movieDetailsType
+  movie?: movieDetailsType
 };
 
 const InitialState = {
@@ -140,22 +143,28 @@ const InitialState = {
 
 const MovieStateReducer = (
   state: stateType = InitialState,
-  { type, payload }: ActionType
+  { type, payload }: actionType
 ): stateType => {
   switch (type) {
     case LOAD_MOVIE_DETAILS:
+      const { id } = payload;
+      if (!id) {
+        return {
+          ...state
+        };
+      }
       return loop(
         {
           ...state,
           loading_movie_details: true
         },
-        Effects.promise(load_movie_details.bind(null, payload))
+        Effects.promise(load_movie_details.bind(null, id))
       );
     case MOVIE_DETAILS_LOADED:
+      const { data: movie } = payload;
       return {
-        ...state,
         loading_movie_details: false,
-        movie: payload
+        movie
       };
     default:
       return state;
