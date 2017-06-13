@@ -31,7 +31,7 @@ const load_upcoming_movies = () => {
 
 type ActionType = {
   type: string,
-  payload?: Object | number
+  payload?: Object | number | string
 };
 
 export const load_latest_movies_action = (): ActionType => ({
@@ -46,6 +46,19 @@ export const movies_loading_failed_action = (): ActionType => ({
   type: MOVIES_LOADING_FAILED
 });
 
+export type movieDetailsType = {
+  id: number,
+  adult: boolean,
+  backdrop_path: string,
+  budget: number,
+  genres: Array<{ id: number, name: string }>,
+  title: string,
+  overview: string,
+  poster_path: string,
+  release_date: string,
+  runtime: number
+};
+
 export const movies_loaded_action = (
   type: string,
   payload: movieDetailsType
@@ -54,7 +67,7 @@ export const movies_loaded_action = (
   payload
 });
 
-export const change_selected_tab_action = payload => ({
+export const change_selected_tab_action = (payload: string) => ({
   type: CHANGE_SELECTED_TAB,
   payload
 });
@@ -65,7 +78,10 @@ export type StateType = {
   loading_upcoming_movies: boolean,
   loading_latest_movies_failed: boolean,
   loading_upcoming_movies_failed: boolean,
-  movies: Array
+  movies?: {
+    latest?: Array<movieDetailsType>,
+    upcoming?: Array<movieDetailsType>
+  }
 };
 
 const initialState = {
@@ -74,18 +90,21 @@ const initialState = {
   loading_upcoming_movies: false,
   loading_latest_movies_failed: false,
   loading_upcoming_movies_failed: false,
-  movies: []
+  movies: {
+    latest: [],
+    upcoming: []
+  }
 };
 
 const MoviesReducer = (
-  state: stateType = initialState,
+  state: StateType = initialState,
   { type, payload }: ActionType
 ): StateType => {
   switch (type) {
     case CHANGE_SELECTED_TAB:
       return {
         ...state,
-        selectedTab: payload
+        selectedTab: String(payload)
       };
     case LOAD_LATEST_MOVIES:
       return loop(
@@ -106,24 +125,20 @@ const MoviesReducer = (
         Effects.promise(load_upcoming_movies)
       );
     case LATEST_MOVIES_LOADED:
+      const movies = Object.assign({}, state.movies, { latest: payload });
       return {
         ...state,
         loading_latest_movies: false,
         loading_latest_movies_failed: false,
-        movies: {
-          ...state.movies,
-          latest: payload
-        }
+        movies
       };
     case UPCOMING_MOVIES_LOADED:
+      const movies = Object.assign({}, state.movies, { upcoming: payload });
       return {
         ...state,
         loading_upcoming_movies: false,
         loading_latest_movies_failed: false,
-        movies: {
-          ...state.movies,
-          upcoming: payload
-        }
+        movies
       };
     case MOVIES_LOADING_FAILED:
       return {

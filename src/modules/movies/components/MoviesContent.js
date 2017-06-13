@@ -2,7 +2,7 @@
 import React, { PureComponent } from "react";
 import Styled from "styled-components";
 
-import { StateType } from "../MoviesState";
+import type { StateType } from "../MoviesState";
 
 import { Loading } from "../../../components/LoadingStatus";
 
@@ -37,8 +37,8 @@ class MoviesContent extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {};
-    this.renderContent = this.renderContent.bind(this);
-    this.headerTabs = this.headerTabs.bind(this);
+    (this: any).renderContent = this.renderContent.bind(this);
+    (this: any).headerTabs = this.headerTabs.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
