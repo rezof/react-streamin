@@ -4,8 +4,6 @@ import Styled from "styled-components";
 
 import { Link } from "react-router-dom";
 
-// import type { showType } from "../HomeState";
-
 import icons from "../../../assets/icons";
 
 const { plus: PlusIcon, play: PlayIcon, more: MoreIcon } = icons;
@@ -46,8 +44,15 @@ const ItemBodyOps = Styled.div`
   background-color: rgba(0, 0, 0, 0.5);
 `;
 
+type movieDetailsType = {
+  id: number,
+  backdrop_path: string,
+  title: string,
+  poster_path: string
+};
+
 type propsType = {
-  item: showType
+  item: movieDetailsType
 };
 
 type stateType = {
@@ -104,7 +109,7 @@ class MoviesContentItem extends PureComponent {
   }
 
   render() {
-    const { item: { id, original_title, poster_path } } = this.props;
+    const { item: { id, title, poster_path } } = this.props;
     const ItemBody = ItemBodyShell.extend`
       background-image: url(https://image.tmdb.org/t/p/w300_and_h450_bestv2/${poster_path})
     `;
@@ -118,7 +123,7 @@ class MoviesContentItem extends PureComponent {
         </ItemBody>
         <ItemTitle>
           <ItemTitleText>
-            {original_title}
+            {title}
           </ItemTitleText>
         </ItemTitle>
       </ItemWrapper>

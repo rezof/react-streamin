@@ -31,7 +31,7 @@ const load_upcoming_movies = () => {
 
 type ActionType = {
   type: string,
-  payload?: Object | number | string
+  payload?: Object | number | string | Array<movieDetailsType>
 };
 
 export const load_latest_movies_action = (): ActionType => ({
@@ -98,7 +98,7 @@ const initialState = {
 
 const MoviesReducer = (
   state: StateType = initialState,
-  { type, payload }: ActionType
+  { type, payload }
 ): StateType => {
   switch (type) {
     case CHANGE_SELECTED_TAB:
@@ -133,18 +133,12 @@ const MoviesReducer = (
         movies
       };
     case UPCOMING_MOVIES_LOADED:
-      const movies = Object.assign({}, state.movies, { upcoming: payload });
+      const _movies = Object.assign({}, state.movies, { upcoming: payload });
       return {
         ...state,
         loading_upcoming_movies: false,
         loading_latest_movies_failed: false,
-        movies
-      };
-    case MOVIES_LOADING_FAILED:
-      return {
-        ...state,
-        loading_data: false,
-        loading_failed: false
+        movies: _movies
       };
     default:
       return state;

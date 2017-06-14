@@ -86,8 +86,9 @@ type showDataLoadedActionType = {
 
 export const show_data_loaded = (
   id: number,
-  data: Array<showEpisodeType>
+  data: Object
 ): showDataLoadedActionType => {
+  console.log("data", data);
   return {
     type: SHOW_DATA_LOADED,
     payload: { id, data }

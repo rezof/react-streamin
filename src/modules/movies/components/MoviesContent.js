@@ -27,16 +27,16 @@ type propsType = {
   moviesState: StateType,
   actions: {
     load_latest_movies_action: Function,
-    load_upcoming_movies_action: Function
+    load_upcoming_movies_action: Function,
+    change_selected_tab_action: Function
   }
 };
 
 class MoviesContent extends PureComponent {
   props: propsType;
 
-  constructor(props) {
+  constructor(props: propsType) {
     super(props);
-    this.state = {};
     (this: any).renderContent = this.renderContent.bind(this);
     (this: any).headerTabs = this.headerTabs.bind(this);
   }
@@ -102,12 +102,12 @@ class MoviesContent extends PureComponent {
       Upcoming: this.displayMoviesChanged.bind(this, "Upcoming"),
       "Top Rated": this.displayMoviesChanged.bind(this, "Top Rated")
     };
-    const { moviesState: { loading_data, movies, selectedTab } } = this.props;
+    const { moviesState: { movies, selectedTab } } = this.props;
     return <Header tabs={tabs} active={selectedTab} />;
   }
 
   render() {
-    const { moviesState: { loading_data, movies } } = this.props;
+    const { moviesState: { movies } } = this.props;
     return (
       <ContentWrapper>
         {this.headerTabs()}

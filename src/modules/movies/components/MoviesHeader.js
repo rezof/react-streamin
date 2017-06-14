@@ -37,7 +37,12 @@ const HomeHeaderSeparator = Styled.div`
   border-bottom: 2px solid #2f3241;
 `;
 
-export default ({ tabs, active }) =>
+type propsType = {
+  tabs: Object,
+  active: string
+};
+
+export default ({ tabs, active }: propsType) =>
   <HomeHeaderWrapper>
     <BrowseTitle>
       Movies
