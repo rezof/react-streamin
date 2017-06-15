@@ -8,6 +8,7 @@ import Header from "../header/headerView";
 import type { stateType } from "./MovieState";
 
 import MovieHeader from "./components/MovieHeader";
+import MovieBody from "./components/MovieBody";
 
 const MovieContainer = Styled.div`
   flex: 1;
@@ -26,6 +27,15 @@ type propsType = {
 
 class MovieView extends PureComponent {
   props: propsType;
+
+  componentDidMount() {
+    const {
+      actions: { load_movie_details_action },
+      match: { params: { id } }
+    } = this.props;
+    load_movie_details_action(id);
+  }
+
   render() {
     const { movieState: { movie } } = this.props;
     return (
@@ -33,7 +43,9 @@ class MovieView extends PureComponent {
         <Header />
         <ContentTemplate>
           <MovieHeader movie={movie} />
-          <MovieContent />
+          <MovieContent>
+            <MovieBody movie={movie} />
+          </MovieContent>
         </ContentTemplate>
       </MovieContainer>
     );
