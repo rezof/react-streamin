@@ -122,6 +122,7 @@ const MovieDetailsLabel = Styled.h4`
   color: lightgrey;
   flex: 1;
   text-align: left;
+  margin-top: 0;
 `;
 
 const MovieDetailsText = Styled.span`
@@ -161,6 +162,10 @@ type propsType = {
 class MovieHeader extends PureComponent {
   props: propsType;
 
+  overviewFormatter(text) {
+    return text.length > 300 ? text.substring(0, 300) + "..." : text;
+  }
+
   renderMovieInfo(props: propsType) {
     const {
       movie: { title, release_date, overview, runtime, budget, genres }
@@ -191,7 +196,7 @@ class MovieHeader extends PureComponent {
           <MovieOverview>
             <MovieLabel>Overview</MovieLabel>
             <MovieOverviewText>
-              {overview}
+              {this.overviewFormatter(overview)}
             </MovieOverviewText>
           </MovieOverview>
           <MovieDetails>
