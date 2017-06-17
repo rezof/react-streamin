@@ -18,18 +18,13 @@ const MovieBodyTabContent = Styled.div`
 `;
 
 const MovieBodyContent = ({ movie, selectedTab }) => {
-  let Content = null;
-  if (selectedTab === "cast" && typeof movie.cast === "object") {
-    const { cast } = movie;
-    Content = <MovieCastTab cast={cast} />;
-  } else if (selectedTab === "videos" && typeof movie.videos === "object") {
-    const { videos } = movie;
-    Content = <MovieVideosTab videos={videos} />;
-  }
+  const { cast, videos } = movie;
+
   return (
     <MovieBodyContentWrapper>
       <MovieBodyTabContent>
-        {Content}
+        <MovieCastTab active={selectedTab === "cast"} cast={cast} />
+        <MovieVideosTab active={selectedTab === "videos"} videos={videos} />
       </MovieBodyTabContent>
     </MovieBodyContentWrapper>
   );

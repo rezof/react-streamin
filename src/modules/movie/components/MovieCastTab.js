@@ -3,12 +3,16 @@ import Styled from "styled-components";
 
 const Wrapper = Styled.div`
   flex: 1;
-  display: flex;
+  display: ${props => (props.active === true ? "flex" : "none")};
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content: center;
+  padding-top: 20px;
 `;
 
 const CastItemWrapper = Styled.div`
+  width: 160px;
+  height: 250px;
   display: flex;
   flex-direction: column;
   margin: 10px 15px;
@@ -35,12 +39,13 @@ const ActorName = Styled(name)`
 
 const CaracterName = name;
 
-const MovieCastTab = ({ cast }) => {
+const MovieCastTab = ({ cast, active }) => {
   return (
-    <Wrapper>
-      {cast.map((c, index) => {
-        return <MovieCastItem key={index} cast={c} />;
-      })}
+    <Wrapper active={active}>
+      {cast &&
+        cast.map((c, index) => {
+          return <MovieCastItem key={index} cast={c} />;
+        })}
     </Wrapper>
   );
 };
