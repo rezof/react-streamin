@@ -1,12 +1,11 @@
 // @flow
 import { loop, Effects } from "redux-loop-symbol-ponyfill";
 
-console.log("Effects", Effects);
-
 const LOAD_MOVIE_DETAILS = "LOAD_MOVIE_DETAILS";
 const MOVIE_DETAILS_LOADED = "MOVIE_DETAILS_LOADED";
 const MOVIE_CAST_LOADED = "MOVIE_CAST_LOADED";
 const MOVIE_VIDEOS_LOADED = "MOVIE_VIDEOS_LOADED";
+const RESET_STATE = "RESET_STATE";
 
 type actionType = {
   type: string,
@@ -59,7 +58,7 @@ const filter_cast_from_credits = data => {
     typeof data.cast === "object" &&
     "slice" in data.cast
   ) {
-    return data.cast.slice(0, 20);
+    return data.cast.filter(c => !!c.profile_path).slice(0, 20);
   } else {
     return [];
   }
@@ -73,6 +72,10 @@ export const movie_cast_loaded_action = (payload): actionType => ({
 export const movie_videos_loaded_action = (payload): actionType => ({
   type: MOVIE_VIDEOS_LOADED,
   payload
+});
+
+export const reset_state_action = (): actionType => ({
+  type: RESET_STATE
 });
 
 export const load_movie_details_action = (id: number): actionType => ({
@@ -251,6 +254,13 @@ const MovieStateReducer = (
         ...state,
         loading_movie_videos: false,
         movie: new_movie_
+      };
+    case RESET_STATE:
+      return {
+        movie: {},
+        load_movie_details: false,
+        loading_movie_cast: false,
+        loading_movie_videos: false
       };
     default:
       return state;
