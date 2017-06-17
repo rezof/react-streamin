@@ -163,7 +163,7 @@ class MovieHeader extends PureComponent {
   props: propsType;
 
   overviewFormatter(text) {
-    return text.length > 300 ? text.substring(0, 300) + "..." : text;
+    return text && text.length > 300 ? text.substring(0, 300) + "..." : text;
   }
 
   renderMovieInfo(props: propsType) {
@@ -186,7 +186,7 @@ class MovieHeader extends PureComponent {
             {title}
           </MovieTitle>
           <MovieReleaseYear>
-            ({release_date.substring(0, 4)})
+            ({release_date && release_date.substring(0, 4)})
           </MovieReleaseYear>
           <MovieOpsContainer>
             <Heart size={20} />
@@ -213,9 +213,10 @@ class MovieHeader extends PureComponent {
                 {_budget}
               </MovieDetailsText>
               <MovieGenresWrapper>
-                {genres.map(({ name }) =>
-                  <MovieDetailsGenre>{name}</MovieDetailsGenre>
-                )}
+                {genres &&
+                  genres.map(({ name }) =>
+                    <MovieDetailsGenre>{name}</MovieDetailsGenre>
+                  )}
               </MovieGenresWrapper>
             </MovieDetailsRow>
           </MovieDetails>
