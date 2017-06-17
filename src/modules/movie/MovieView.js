@@ -36,6 +36,11 @@ class MovieView extends PureComponent {
     load_movie_details_action(id);
   }
 
+  componentWillUnmount() {
+    const { actions: { reset_state_action } } = this.props;
+    reset_state_action();
+  }
+
   render() {
     const { movieState: { movie } } = this.props;
     return (
