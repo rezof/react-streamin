@@ -53,7 +53,7 @@ class Show extends PureComponent {
     return (
       <ContentWrapper>
         <Header />
-        <ContentTemplate>
+        <ContentTemplate location={location} name={show.name}>
           <ShowContent
             location={location}
             show={show}

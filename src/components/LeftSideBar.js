@@ -2,12 +2,10 @@
 import React, { PureComponent } from "react";
 import Styled from "styled-components";
 
-import LeftSideBarSection from "./LeftSideBarSection";
+import CurrentPositionSection from "./CurrentPositionSection";
 
 const SideBarWrapper = Styled.div`
-  flex: 1;
-  background-color: #363949;
-  border-right: 1px solid #2f3241;
+  flex: 1;  
 `;
 
 type propsType = {
@@ -27,18 +25,22 @@ class LeftSideBar extends PureComponent {
   static defaultProps = defaultProps;
 
   render() {
-    const { location } = this.props;
+    const { location, name } = this.props;
     return (
       <SideBarWrapper>
-        <LeftSideBarSection
+        <CurrentPositionSection
+          name={name}
           location={location.pathname}
           title="Main"
           items={[
-            { title: "tv Shows", to: "/" },
-            { title: "Movies", to: "/movies" },
+            { title: "tv Shows", to: "/", sub: { pattern: "/show/[0-9]*$" } },
+            {
+              title: "Movies",
+              to: "/movies",
+              sub: { pattern: "/movie/[0-9]*$" }
+            },
             { title: "Tv Schedule", to: "/schedule" }
           ]}
-          selected="movies"
         />
       </SideBarWrapper>
     );

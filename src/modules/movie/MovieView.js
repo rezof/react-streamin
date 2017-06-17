@@ -34,6 +34,7 @@ class MovieView extends PureComponent {
       match: { params: { id } }
     } = this.props;
     load_movie_details_action(id);
+    window.scrollTo(0, 0);
   }
 
   componentWillUnmount() {
@@ -42,11 +43,12 @@ class MovieView extends PureComponent {
   }
 
   render() {
-    const { movieState: { movie } } = this.props;
+    const { movieState: { movie }, location } = this.props;
+    const movie_name = movie && movie.title;
     return (
       <MovieContainer>
         <Header />
-        <ContentTemplate>
+        <ContentTemplate location={location} name={movie_name}>
           <MovieHeader movie={movie} />
           <MovieContent>
             <MovieBody movie={movie} />
