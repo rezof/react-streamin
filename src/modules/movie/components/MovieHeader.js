@@ -162,7 +162,7 @@ type propsType = {
 class MovieHeader extends PureComponent {
   props: propsType;
 
-  overviewFormatter(text) {
+  overviewFormatter(text: string) {
     return text && text.length > 300 ? text.substring(0, 300) + "..." : text;
   }
 
