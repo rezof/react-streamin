@@ -109,18 +109,18 @@ export const movie_details_loaded = (movie: movieDetailsType): actionType => ({
 });
 
 export type movieDetailsType = {
-  id: number,
-  adult: boolean,
-  backdrop_path: string,
-  budget: number,
-  genres: Array<{ id: number, name: string }>,
-  title: string,
-  overview: string,
-  poster_path: string,
-  release_date: string,
-  runtime: number,
-  cast: Array<movieCastType>,
-  videos: Array<movieVideosType>
+  id?: number,
+  adult?: boolean,
+  backdrop_path?: string,
+  budget?: number,
+  genres?: Array<{ id: number, name: string }>,
+  title?: string,
+  overview?: string,
+  poster_path?: string,
+  release_date?: string,
+  runtime?: number,
+  cast?: Array<movieCastType>,
+  videos?: Array<movieVideosType>
 };
 
 export type stateType = {
