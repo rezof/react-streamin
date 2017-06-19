@@ -123,6 +123,7 @@ const MovieDetailsLabel = Styled.h4`
   flex: 1;
   text-align: left;
   margin-top: 0;
+  min-width: 100px;
 `;
 
 const MovieDetailsText = Styled.span`
@@ -168,8 +169,16 @@ class MovieHeader extends PureComponent {
 
   renderMovieInfo(props: propsType) {
     const {
-      movie: { title, release_date, overview, runtime, budget, genres }
+      movie = {
+        title: "",
+        release_date: "",
+        overview: "",
+        runtime: "",
+        budget: 0,
+        genres: []
+      }
     } = props;
+    const { title, release_date, overview, runtime, budget, genres } = movie;
     const runTimeHours = parseInt(runtime / 60);
     const runTimeMinutes = Math.floor(runtime % 60);
     const budgetArray = String(budget).split("");
@@ -186,7 +195,9 @@ class MovieHeader extends PureComponent {
             {title}
           </MovieTitle>
           <MovieReleaseYear>
-            ({release_date && release_date.substring(0, 4)})
+            {release_date &&
+              release_date.substring(0, 4) &&
+              `(${release_date.substring(0, 4)})`}
           </MovieReleaseYear>
           <MovieOpsContainer>
             <Heart size={20} />
@@ -226,7 +237,8 @@ class MovieHeader extends PureComponent {
   }
 
   render() {
-    const { movie: { poster_path, backdrop_path } } = this.props;
+    const { movie = { poster_path: "", backdrop_path: "" } } = this.props;
+    const { poster_path = "", backdrop_path = "" } = movie;
     return (
       <HeaderWrapper background={backdrop_path}>
         <HeaderContent>

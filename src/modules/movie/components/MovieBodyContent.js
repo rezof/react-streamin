@@ -24,7 +24,10 @@ type propsType = {
   selectedTab: string
 };
 
-const MovieBodyContent = ({ movie, selectedTab }: propsType) => {
+const MovieBodyContent = ({
+  movie = { cast: [], videos: [] },
+  selectedTab
+}: propsType) => {
   const { cast, videos } = movie;
   return (
     <MovieBodyContentWrapper>
