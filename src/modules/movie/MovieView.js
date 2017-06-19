@@ -22,7 +22,13 @@ const MovieContent = Styled.div`
 `;
 
 type propsType = {
-  movieState: stateType
+  movieState: stateType,
+  actions: {
+    load_movie_details_action: Function,
+    reset_state_action: Function
+  },
+  match: { params: { id: number } },
+  location: { pathname: string }
 };
 
 class MovieView extends PureComponent {

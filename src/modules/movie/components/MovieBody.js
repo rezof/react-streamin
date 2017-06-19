@@ -4,6 +4,8 @@ import Styled from "styled-components";
 import MovieBodyTabs from "./MovieBodyTabs";
 import MovieBodyContent from "./MovieBodyContent";
 
+import type { movieDetailsType } from "../movieState";
+
 const MovieBodyWrapper = Styled.div`
   flex: 1;
   display: flex;
@@ -11,8 +13,18 @@ const MovieBodyWrapper = Styled.div`
   justify-content: center;
 `;
 
+type propsType = {
+  movie: movieDetailsType
+};
+
 class MovieBody extends PureComponent {
-  constructor(props) {
+  state: {
+    selectedTab: string,
+    tabs: Array<string>
+  };
+  props: propsType;
+
+  constructor(props: propsType) {
     super(props);
     const tabs = ["cast", "videos", "reviews"];
     this.state = {

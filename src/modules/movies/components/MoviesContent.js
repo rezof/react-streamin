@@ -41,7 +41,7 @@ class MoviesContent extends PureComponent {
     (this: any).headerTabs = this.headerTabs.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps: propsType) {
     const {
       moviesState: {
         selectedTab,

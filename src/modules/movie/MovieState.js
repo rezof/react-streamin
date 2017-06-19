@@ -9,9 +9,11 @@ const RESET_STATE = "RESET_STATE";
 
 type actionType = {
   type: string,
-  payload: {
+  payload?: {
     id?: number,
-    data?: Object
+    movie?: Object,
+    cast?: Array<movieCastType>,
+    videos?: Array<movieVideosType>
   }
 };
 
@@ -32,9 +34,6 @@ const load_movie_credits = (id: number) => {
   )
     .then(res => res.json())
     .then(filter_cast_from_credits)
-    .then(data => {
-      return data;
-    })
     .then(movie_cast_loaded_action)
     .catch();
 };
@@ -64,14 +63,35 @@ const filter_cast_from_credits = data => {
   }
 };
 
-export const movie_cast_loaded_action = (payload): actionType => ({
+type movieCastType = {
+  cast_id: number,
+  character: string,
+  id: number,
+  name: string,
+  profile_path: string
+};
+
+export const movie_cast_loaded_action = (
+  cast: Array<movieCastType>
+): actionType => ({
   type: MOVIE_CAST_LOADED,
-  payload
+  payload: {
+    cast
+  }
 });
 
-export const movie_videos_loaded_action = (payload): actionType => ({
+type movieVideosType = {
+  id: string,
+  key: string,
+  name: string,
+  site: string
+};
+
+export const movie_videos_loaded_action = (
+  videos: Array<movieVideosType>
+): actionType => ({
   type: MOVIE_VIDEOS_LOADED,
-  payload
+  payload: { videos }
 });
 
 export const reset_state_action = (): actionType => ({
@@ -83,9 +103,9 @@ export const load_movie_details_action = (id: number): actionType => ({
   payload: { id }
 });
 
-export const movie_details_loaded = (data: movieDetailsType): actionType => ({
+export const movie_details_loaded = (movie: movieDetailsType): actionType => ({
   type: MOVIE_DETAILS_LOADED,
-  payload: { data }
+  payload: { movie }
 });
 
 export type movieDetailsType = {
@@ -98,23 +118,39 @@ export type movieDetailsType = {
   overview: string,
   poster_path: string,
   release_date: string,
-  runtime: number
+  runtime: number,
+  cast: Array<movieCastType>,
+  videos: Array<movieVideosType>
 };
 
 export type stateType = {
   loading_movie_details: boolean,
+  loading_movie_details_failed: boolean,
+  loading_movie_cast: boolean,
+  loading_movie_cast_failed: boolean,
+  loading_movie_videos: boolean,
+  loading_movie_videos_failed: boolean,
   movie?: movieDetailsType
 };
 
 const InitialState = {
   loading_movie_details: false,
-  movie: {}
+  loading_movie_details_failed: false,
+  loading_movie_cast: false,
+  loading_movie_cast_failed: false,
+  loading_movie_videos: false,
+  loading_movie_videos_failed: false
 };
 
-const movie_loaded_effects = id => [
-  Effects.promise(load_movie_videos.bind(null, id)),
-  Effects.promise(load_movie_credits.bind(null, id))
-];
+const movie_loaded_effects = id => {
+  if (id === -1) {
+    return [];
+  }
+  return [
+    Effects.promise(load_movie_videos.bind(null, id)),
+    Effects.promise(load_movie_credits.bind(null, id))
+  ];
+};
 
 const MovieStateReducer = (
   state: stateType = InitialState,
@@ -122,6 +158,12 @@ const MovieStateReducer = (
 ): stateType => {
   switch (type) {
     case LOAD_MOVIE_DETAILS:
+      if (!payload || !payload.hasOwnProperty("id")) {
+        return {
+          ...state,
+          loading_movie_details_failed: true
+        };
+      }
       const { id } = payload;
       if (!id) {
         return {
@@ -136,44 +178,61 @@ const MovieStateReducer = (
         Effects.promise(load_movie_details.bind(null, id))
       );
     case MOVIE_DETAILS_LOADED:
-      const { data: movie } = payload;
-
+      if (!(payload && payload.hasOwnProperty("movie") && payload.movie)) {
+        return {
+          ...state
+        };
+      }
+      const { movie } = payload;
+      const { id: movieId = -1 } = movie;
       return loop(
         {
           ...state,
           loading_movie_details: false,
+          loading_movie_details_failed: false,
           movie
         },
-        Effects.batch(movie_loaded_effects(movie.id))
+        Effects.batch(movie_loaded_effects(movieId))
       );
     case MOVIE_CAST_LOADED:
-      const new_movie = Object.assign(
-        {},
-        { ...state.movie },
-        { cast: payload }
-      );
+      if (!payload || !payload.hasOwnProperty("cast")) {
+        return {
+          ...state,
+          loading_movie_cast_failed: true
+        };
+      }
       return {
         ...state,
         loading_movie_cast: false,
-        movie: new_movie
+        movie: {
+          ...state.movie,
+          cast: payload.cast
+        }
       };
     case MOVIE_VIDEOS_LOADED:
-      const new_movie_ = Object.assign(
-        {},
-        { ...state.movie },
-        { videos: payload }
-      );
+      if (!payload || !payload.hasOwnProperty("videos")) {
+        return {
+          ...state,
+          loading_movie_videos_failed: true
+        };
+      }
       return {
         ...state,
         loading_movie_videos: false,
-        movie: new_movie_
+        loading_movie_videos_failed: false,
+        movie: {
+          ...state.movie,
+          videos: payload.videos
+        }
       };
     case RESET_STATE:
       return {
-        movie: {},
-        load_movie_details: false,
+        loading_movie_details: false,
+        loading_movie_details_failed: false,
         loading_movie_cast: false,
-        loading_movie_videos: false
+        loading_movie_cast_failed: false,
+        loading_movie_videos: false,
+        loading_movie_videos_failed: false
       };
     default:
       return state;
