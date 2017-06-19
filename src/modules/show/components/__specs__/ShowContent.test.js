@@ -200,10 +200,8 @@ const show = {
 
 describe("ShowContent tests", () => {
   it("is loading", () => {
-    const showState = {
-      loading_data: true
-    };
-    const ShowContentWrapper = shallow(<ShowContent showState={showState} />);
+    const isLoading = true;
+    const ShowContentWrapper = shallow(<ShowContent isLoading={isLoading} />);
     expect(ShowContentWrapper.find(Loading).length).to.equal(1);
     expect(ShowContentWrapper.find(".season-item-wrapper").length).to.be.equal(
       0
@@ -211,18 +209,14 @@ describe("ShowContent tests", () => {
   });
 
   it("season list items count", () => {
-    const ShowContentWrapper = render(
-      <ShowContent showState={{ loading_data: false, show }} />
-    );
+    const ShowContentWrapper = render(<ShowContent show={show} />);
     expect(ShowContentWrapper.find(".season-item-wrapper").length).to.be.equal(
       Object.keys(show.episodes).length
     );
   });
 
   it("selected season change test", () => {
-    const ShowContentWrapper = mount(
-      <ShowContent showState={{ loading_data: false, show }} />
-    );
+    const ShowContentWrapper = mount(<ShowContent show={show} />);
     const seasonId = 2;
     expect(ShowContentWrapper.find(".episode-item-wrapper").length).to.equal(0);
     ShowContentWrapper.find(`.season-item-${seasonId}`).simulate("click");

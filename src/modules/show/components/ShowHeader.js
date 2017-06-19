@@ -113,7 +113,8 @@ const ShowHeader = props => {
       <ShowHeaderGradient>
         <ShowHeaderInfo>
           <ShowHeaderTitleContainer>
-            {show.hasOwnProperty("image") &&
+            {show &&
+              show.hasOwnProperty("image") &&
               <ShowHeaderTitle>
                 <ShowNameText className="show-name">{showName}</ShowNameText>
                 <ShowStatusContainer>

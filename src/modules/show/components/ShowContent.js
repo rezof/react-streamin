@@ -79,6 +79,7 @@ class ShowContent extends PureComponent {
     if (isLoading) {
       content = <Loading />;
     } else if (
+      show &&
       show.hasOwnProperty("episodes") &&
       typeof show.episodes == "object" &&
       Object.keys(show.episodes).length
