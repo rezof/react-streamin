@@ -168,17 +168,15 @@ class MovieHeader extends PureComponent {
   }
 
   renderMovieInfo(props: propsType) {
+    const { movie = {} } = props;
     const {
-      movie = {
-        title: "",
-        release_date: "",
-        overview: "",
-        runtime: "",
-        budget: 0,
-        genres: []
-      }
-    } = props;
-    const { title, release_date, overview, runtime, budget, genres } = movie;
+      title = "",
+      release_date = "",
+      overview = "",
+      runtime = 0,
+      budget = 0,
+      genres = []
+    } = movie;
     const runTimeHours = parseInt(runtime / 60);
     const runTimeMinutes = Math.floor(runtime % 60);
     const budgetArray = String(budget).split("");
