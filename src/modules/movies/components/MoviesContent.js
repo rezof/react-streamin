@@ -5,6 +5,7 @@ import Styled from "styled-components";
 import type { StateType } from "../MoviesState";
 
 import { Loading } from "../../../components/LoadingStatus";
+import AnimatedListItem from "../../../components/AnimatedListItem";
 
 import MoviesContentItem from "./MoviesContentItem";
 import Header from "./MoviesHeader";
@@ -39,6 +40,15 @@ class MoviesContent extends PureComponent {
     super(props);
     (this: any).renderContent = this.renderContent.bind(this);
     (this: any).headerTabs = this.headerTabs.bind(this);
+    this.state = {
+      animateList: false
+    };
+  }
+
+  componentWillMount() {
+    this.setState({ animationName: "FadeIn", animateList: true }, () => {
+      this.setState({ animateList: false });
+    });
   }
 
   componentWillReceiveProps(nextProps: propsType) {
@@ -61,6 +71,8 @@ class MoviesContent extends PureComponent {
       else if (selectedTab === "upcoming" && !loading_upcoming_movies) {
         load_upcoming_movies_action();
       }
+    } else {
+      this.setState({ animationName: "fadeIn", animateList: false });
     }
   }
 
@@ -84,8 +96,16 @@ class MoviesContent extends PureComponent {
       movies[selectedTab] &&
       typeof movies[selectedTab].map === "function"
     ) {
+      const { animateList, animationName } = this.state;
       content = movies[selectedTab].map(movie =>
-        <MoviesContentItem key={movie.id} item={movie} />
+        <AnimatedListItem
+          animate={animateList}
+          mountAnimation={this.state.animationName}
+          unMountAnimation="fadeOut"
+          duration={0.3}
+        >
+          <MoviesContentItem key={movie.id} item={movie} />
+        </AnimatedListItem>
       );
     }
     return content;
@@ -93,7 +113,12 @@ class MoviesContent extends PureComponent {
 
   displayMoviesChanged(key: string) {
     const { actions: { change_selected_tab_action } } = this.props;
-    change_selected_tab_action(key.toLowerCase());
+    this.setState({ animationName: "fadeOut", animateList: true }, () => {
+      setTimeout(() => {
+        change_selected_tab_action(key.toLowerCase());
+        this.setState({ animationName: "fadeIn", animateList: false });
+      }, 300);
+    });
   }
 
   headerTabs() {
