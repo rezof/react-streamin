@@ -5,23 +5,15 @@ import Styled from "styled-components";
 import type { StateType } from "../MoviesState";
 
 import { Loading } from "../../../components/LoadingStatus";
-import AnimatedListItem from "../../../components/AnimatedListItem";
+import MoviesContentList from "./MoviesContentList";
 
-import MoviesContentItem from "./MoviesContentItem";
 import Header from "./MoviesHeader";
 
 const ContentWrapper = Styled.div`
     flex: 1;
     display: flex;
     flex-direction: column;
-`;
-
-const ItemWrapper = Styled.div`
-    padding: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    min-height: 100vh;
-    min-width: 80%;
+    min-height: 90vh;
 `;
 
 type propsType = {
@@ -93,32 +85,20 @@ class MoviesContent extends PureComponent {
       content = <Loading />;
     } else if (
       typeof movies === "object" &&
-      movies[selectedTab] &&
-      typeof movies[selectedTab].map === "function"
+      movies.hasOwnProperty(selectedTab)
     ) {
-      const { animateList, animationName } = this.state;
-      content = movies[selectedTab].map(movie =>
-        <AnimatedListItem
-          animate={animateList}
-          mountAnimation={this.state.animationName}
-          unMountAnimation="fadeOut"
-          duration={0.3}
-        >
-          <MoviesContentItem key={movie.id} item={movie} />
-        </AnimatedListItem>
-      );
+      content = <MoviesContentList movies={movies[selectedTab]} />;
     }
     return content;
   }
 
   displayMoviesChanged(key: string) {
-    const { actions: { change_selected_tab_action } } = this.props;
-    this.setState({ animationName: "fadeOut", animateList: true }, () => {
-      setTimeout(() => {
-        change_selected_tab_action(key.toLowerCase());
-        this.setState({ animationName: "fadeIn", animateList: false });
-      }, 300);
-    });
+    const {
+      actions: { change_selected_tab_action },
+      moviesState: { selectedTab }
+    } = this.props;
+    if (selectedTab !== key.toLowerCase())
+      change_selected_tab_action(key.toLowerCase());
   }
 
   headerTabs() {
@@ -136,9 +116,7 @@ class MoviesContent extends PureComponent {
     return (
       <ContentWrapper>
         {this.headerTabs()}
-        <ItemWrapper>
-          {this.renderContent()}
-        </ItemWrapper>
+        {this.renderContent()}
       </ContentWrapper>
     );
   }

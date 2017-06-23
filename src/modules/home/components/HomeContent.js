@@ -5,6 +5,7 @@ import Styled from "styled-components";
 import HomeHeader from "./HomeHeader";
 import HomeContentItem from "./HomeContentItem";
 import { Loading } from "../../../components/LoadingStatus";
+import AnimatedListItem from "../../../components/AnimatedListItem";
 
 import type { showType, stateType } from "../HomeState";
 
@@ -27,15 +28,39 @@ class HomeContent extends PureComponent {
 
   constructor(props: propsType) {
     super(props);
+    this.state = {
+      animate: true,
+      animation: "fadeIn",
+      duration: 0.5
+    };
+  }
+
+  componentWillRecieveProps(nextProps) {
+    if (nextProps.data !== this.props.data) {
+      this.setState({ animate: true, animation: "fadeOut" }, () =>
+        this.setState({ animation: false })
+      );
+    }
   }
 
   render() {
     const { data, loading_data } = this.props;
+    const { animate, animation, duration } = this.state;
     let content = null;
     if (loading_data) {
       content = <Loading />;
     } else {
-      content = data.map(item => <HomeContentItem key={item.id} item={item} />);
+      content = data.map(item =>
+        <AnimatedListItem
+          duration={duration}
+          key={item.id}
+          animate={animate}
+          animation={animation}
+        >
+          <HomeContentItem item={item} />
+          {" "}
+        </AnimatedListItem>
+      );
     }
     return (
       <ContentWrapper>

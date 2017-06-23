@@ -28,7 +28,6 @@ class MoviesContentList extends PureComponent {
 
   componentWillReceiveProps(nextProps) {
     if (this.state.movies !== nextProps.movies) {
-      console.log("nextProps", nextProps);
       this.setState({ animation: "fadeOut" }, () => {
         setTimeout(() => {
           this.setState({ movies: nextProps.movies, animation: "fadeIn" });
