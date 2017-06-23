@@ -13,7 +13,8 @@
         sourceType: "module"
     },
     plugins: [
-        "react"
+        "react",
+        "jsx"
     ],
     rules: {
         quotes: [
@@ -24,8 +25,10 @@
             "error",
             "always"
         ],
-        complexity: ["error", 2],
+        complexity: [
+            "error",
+            2
+        ],
         depth: 2,
-
     }
 }
