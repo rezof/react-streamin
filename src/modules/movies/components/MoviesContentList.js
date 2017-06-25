@@ -3,6 +3,8 @@ import React, { PureComponent } from "react";
 
 import Styled from "styled-components";
 
+import type { movieDetailsType } from "../MoviesState";
+
 import AnimatedListItem from "../../../components/AnimatedListItem";
 import MoviesContentItem from "./MoviesContentItem";
 
@@ -15,8 +17,21 @@ const Wrapper = Styled.div`
     min-width: 80%;
 `;
 
+type stateType = {
+  animation: string,
+  movies: Array<movieDetailsType>,
+  animationDuration: number
+};
+
+type propsType = {
+  movies: Array<movieDetailsType>
+};
+
 class MoviesContentList extends PureComponent {
-  constructor(props) {
+  state: stateType;
+  props: propsType;
+
+  constructor(props: propsType) {
     super(props);
     const { movies } = props;
     this.state = {
@@ -26,7 +41,7 @@ class MoviesContentList extends PureComponent {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps: propsType) {
     if (this.state.movies !== nextProps.movies) {
       this.setState({ animation: "fadeOut" }, () => {
         setTimeout(() => {

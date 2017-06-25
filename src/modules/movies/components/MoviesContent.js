@@ -32,15 +32,6 @@ class MoviesContent extends PureComponent {
     super(props);
     (this: any).renderContent = this.renderContent.bind(this);
     (this: any).headerTabs = this.headerTabs.bind(this);
-    this.state = {
-      animateList: false
-    };
-  }
-
-  componentWillMount() {
-    this.setState({ animationName: "FadeIn", animateList: true }, () => {
-      this.setState({ animateList: false });
-    });
   }
 
   componentWillReceiveProps(nextProps: propsType) {
@@ -63,8 +54,6 @@ class MoviesContent extends PureComponent {
       else if (selectedTab === "upcoming" && !loading_upcoming_movies) {
         load_upcoming_movies_action();
       }
-    } else {
-      this.setState({ animationName: "fadeIn", animateList: false });
     }
   }
 

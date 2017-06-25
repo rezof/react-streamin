@@ -44,7 +44,7 @@ const ItemBodyOps = Styled.div`
   background-color: rgba(0, 0, 0, 0.5);
 `;
 
-type movieDetailsType = {
+type itemType = {
   id: number,
   backdrop_path: string,
   title: string,
@@ -52,7 +52,7 @@ type movieDetailsType = {
 };
 
 type propsType = {
-  item: movieDetailsType
+  item: itemType
 };
 
 type stateType = {

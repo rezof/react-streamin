@@ -7,7 +7,7 @@ import HomeContentItem from "./HomeContentItem";
 import { Loading } from "../../../components/LoadingStatus";
 import AnimatedListItem from "../../../components/AnimatedListItem";
 
-import type { showType, stateType } from "../HomeState";
+import type { showType, stateType as propsType } from "../HomeState";
 
 const ItemsList = Styled.div`
     padding: 20px;
@@ -21,24 +21,23 @@ const ContentWrapper = Styled.div`
   flex: 1;
 `;
 
-type propsType = stateType;
-
+type stateType = {
+  animate: boolean,
+  animation: string,
+  duration: number
+};
 class HomeContent extends PureComponent {
   props: propsType;
+  state: stateType = {
+    animate: true,
+    animation: "fadeIn",
+    duration: 0.5
+  };
 
-  constructor(props: propsType) {
-    super(props);
-    this.state = {
-      animate: true,
-      animation: "fadeIn",
-      duration: 0.5
-    };
-  }
-
-  componentWillRecieveProps(nextProps) {
+  componentWillRecieveProps(nextProps: stateType) {
     if (nextProps.data !== this.props.data) {
       this.setState({ animate: true, animation: "fadeOut" }, () =>
-        this.setState({ animation: false })
+        this.setState({ animate: false })
       );
     }
   }
