@@ -4,7 +4,7 @@ import Styled from "styled-components";
 
 import HomeHeader from "./HomeHeader";
 import HomeContentItem from "./HomeContentItem";
-import { Loading } from "../../../components/LoadingStatus";
+import ContentStatus from "../../../components/ContentStatus";
 import AnimatedListItem from "../../../components/AnimatedListItem";
 
 import type { showType, stateType as propsType } from "../HomeState";
@@ -47,7 +47,7 @@ class HomeContent extends PureComponent {
     const { animate, animation, duration } = this.state;
     let content = null;
     if (loading_data) {
-      content = <Loading />;
+      content = <ContentStatus>Loading...</ContentStatus>;
     } else {
       content = data.map(item =>
         <AnimatedListItem
