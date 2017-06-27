@@ -62,6 +62,7 @@ const HeaderContent = Styled.div`
 const MoviePosterContainer = Styled.div`
   flex: 1;
   display: flex;
+  height: 100%;
   justify-content: flex-end;
   align-items: center;
 `;
