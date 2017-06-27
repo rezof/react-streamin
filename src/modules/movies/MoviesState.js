@@ -2,11 +2,15 @@
 import { loop, Effects } from "redux-loop-symbol-ponyfill";
 
 const LOAD_LATEST_MOVIES = "LOAD_LATEST_MOVIES";
-const LOAD_UPCOMING_MOVIES = "LOAD_UPCOMING_MOVIES";
-const LOAD_TOP_RATED_MOVIES = "LOAD_TOP_RATED_MOVIES";
 const LATEST_MOVIES_LOADED = "LATEST_MOVIES_LOADED";
+const LOADING_LATEST_MOVIES_FAILED = "LOADING_LATEST_MOVIES_FAILED";
+
+const LOAD_UPCOMING_MOVIES = "LOAD_UPCOMING_MOVIES";
 const UPCOMING_MOVIES_LOADED = "UPCOMING_MOVIES_LOADED";
-const MOVIES_LOADING_FAILED = "MOVIES_LOADING_FAILED";
+const LOADING_UPCOMING_MOVIES_FAILED = "LOADING_UPCOMING_MOVIES_FAILED";
+
+const LOAD_TOP_RATED_MOVIES = "LOAD_TOP_RATED_MOVIES";
+
 const CHANGE_SELECTED_TAB = "CHANGE_SELECTED_TAB";
 
 const load_latest_movies = () => {
@@ -16,7 +20,7 @@ const load_latest_movies = () => {
     .then(r => r.json())
     .then(data => data.results)
     .then(movies_loaded_action.bind(null, LATEST_MOVIES_LOADED))
-    .catch(movies_loading_failed_action);
+    .catch(loading_latest_movies_failed_action);
 };
 
 const load_upcoming_movies = () => {
@@ -26,7 +30,7 @@ const load_upcoming_movies = () => {
     .then(r => r.json())
     .then(data => data.results)
     .then(movies_loaded_action.bind(null, UPCOMING_MOVIES_LOADED))
-    .catch(movies_loading_failed_action);
+    .catch(loading_upcoming_movies_failed_action);
 };
 
 type ActionType = {
@@ -42,8 +46,16 @@ export const load_upcoming_movies_action = (): ActionType => ({
   type: LOAD_UPCOMING_MOVIES
 });
 
-export const movies_loading_failed_action = (): ActionType => ({
-  type: MOVIES_LOADING_FAILED
+export const loading_latest_movies_failed_action = (): ActionType => ({
+  type: LOADING_LATEST_MOVIES_FAILED
+});
+
+export const loading_upcoming_movies_failed_action = (): ActionType => ({
+  type: LOADING_UPCOMING_MOVIES_FAILED
+});
+
+export const loading = (): ActionType => ({
+  type: LOADING_LATEST_MOVIES_FAILED
 });
 
 export type movieDetailsType = {
@@ -132,6 +144,12 @@ const MoviesReducer = (
         loading_latest_movies_failed: false,
         movies
       };
+    case LOADING_LATEST_MOVIES_FAILED:
+      return {
+        ...state,
+        loading_latest_movies_failed: true,
+        loading_latest_movies: false
+      };
     case UPCOMING_MOVIES_LOADED:
       const _movies = Object.assign({}, state.movies, { upcoming: payload });
       return {
@@ -139,6 +157,12 @@ const MoviesReducer = (
         loading_upcoming_movies: false,
         loading_latest_movies_failed: false,
         movies: _movies
+      };
+    case LOADING_UPCOMING_MOVIES_FAILED:
+      return {
+        ...state,
+        loading_upcoming_movies_failed: true,
+        loading_upcoming_movies: false
       };
     default:
       return state;
