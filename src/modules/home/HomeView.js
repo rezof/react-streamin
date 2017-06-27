@@ -27,7 +27,7 @@ class Home extends PureComponent {
 
   componentDidMount() {
     const { actions: { load_data }, homeState } = this.props;
-    if (homeState.data.length == 0) {
+    if (homeState.data.length === 0) {
       load_data();
     }
   }
