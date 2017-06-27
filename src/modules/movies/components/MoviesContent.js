@@ -4,7 +4,7 @@ import Styled from "styled-components";
 
 import type { StateType } from "../MoviesState";
 
-import { Loading } from "../../../components/LoadingStatus";
+import ContentStatus from "../../../components/ContentStatus";
 import MoviesContentList from "./MoviesContentList";
 
 import Header from "./MoviesHeader";
@@ -40,7 +40,9 @@ class MoviesContent extends PureComponent {
         selectedTab,
         movies,
         loading_latest_movies,
-        loading_upcoming_movies
+        loading_upcoming_movies,
+        loading_latest_movies_failed,
+        loading_upcoming_movies_failed
       },
       actions: { load_latest_movies_action, load_upcoming_movies_action }
     } = nextProps;
@@ -49,9 +51,17 @@ class MoviesContent extends PureComponent {
       (typeof movies[selectedTab] === "object" &&
         movies[selectedTab].length === 0)
     ) {
-      if (selectedTab === "latest" && !loading_latest_movies)
+      if (
+        selectedTab === "latest" &&
+        !loading_latest_movies &&
+        !loading_latest_movies_failed
+      ) {
         load_latest_movies_action();
-      else if (selectedTab === "upcoming" && !loading_upcoming_movies) {
+      } else if (
+        selectedTab === "upcoming" &&
+        !loading_upcoming_movies &&
+        !loading_upcoming_movies_failed
+      ) {
         load_upcoming_movies_action();
       }
     }
@@ -61,17 +71,24 @@ class MoviesContent extends PureComponent {
     const {
       moviesState: {
         selectedTab,
-        loading_upcoming_movies,
         loading_latest_movies,
+        loading_latest_movies_failed,
+        loading_upcoming_movies,
+        loading_upcoming_movies_failed,
+        loading_top_rated_movies,
+        loading_top_rated_movies_failed,
         movies
       }
     } = this.props;
     let content = null;
+    const currentTab = selectedTab.replace(" ", "_");
     if (
       (selectedTab.toLowerCase() === "latest" && loading_latest_movies) ||
       (selectedTab.toLowerCase() === "upcoming" && loading_upcoming_movies)
     ) {
-      content = <Loading />;
+      content = <ContentStatus>Loading...</ContentStatus>;
+    } else if (eval(`loading_${currentTab}_movies_failed`) === true) {
+      content = <ContentStatus>failed to load movies</ContentStatus>;
     } else if (
       typeof movies === "object" &&
       movies.hasOwnProperty(selectedTab)
