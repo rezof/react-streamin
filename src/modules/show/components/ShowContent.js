@@ -2,7 +2,7 @@
 import React, { PureComponent } from "react";
 import Styled from "styled-components";
 
-import { Loading } from "../../../components/LoadingStatus";
+import ContentStatus from "../../../components/ContentStatus";
 
 import SeasonsList from "./SeasonsList";
 import EpisodesList from "./EpisodesList";
@@ -26,25 +26,6 @@ const ShowContentWrapper = Styled.div`
   flex-direction: row;
   justify-content: space-between;
 `;
-
-// const ShowExpandContent = Styled.div`
-//   flex: 1;
-//   height: 30px;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   border: 1px solid #9c9ea6;
-//   border-right: none;
-//   border-left: none;
-// `;
-//
-// const ShowExpandContentText = Styled.p`
-//   margin: 0;
-//   padding: 0;
-//   font-weight: 600;
-//   font-size: 14px;
-//   color: #9c9ea6;
-// `;
 
 type propsType = {
   show: showDetailsType,
@@ -77,7 +58,7 @@ class ShowContent extends PureComponent {
     const { show, isLoading } = this.props;
     let content = null;
     if (isLoading) {
-      content = <Loading />;
+      content = <ContentStatus>Loading...</ContentStatus>;
     } else if (
       show &&
       show.hasOwnProperty("episodes") &&
@@ -113,14 +94,6 @@ class ShowContent extends PureComponent {
           <ShowContentWrapper>
             {this.renderShowContent()}
           </ShowContentWrapper>
-          {/*
-          <ShowExpandContent>
-              <ShowExpandContentText>
-                Expand
-              </ShowExpandContentText>
-
-          </ShowExpandContent>
-          */}
         </ShowContentBody>
       </ContentWrapper>
     );
