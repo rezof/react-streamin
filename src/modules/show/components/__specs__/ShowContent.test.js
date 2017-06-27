@@ -2,7 +2,7 @@ import React from "react";
 import { shallow, render, mount } from "enzyme";
 import { expect } from "chai";
 
-import { Loading } from "../../../../components/LoadingStatus";
+import ContentStatus from "../../../../components/ContentStatus";
 import ShowContent from "../ShowContent";
 import { SeasonListItem } from "../SeasonsList";
 
@@ -202,7 +202,7 @@ describe("ShowContent tests", () => {
   it("is loading", () => {
     const isLoading = true;
     const ShowContentWrapper = shallow(<ShowContent isLoading={isLoading} />);
-    expect(ShowContentWrapper.find(Loading).length).to.equal(1);
+    expect(ShowContentWrapper.find(ContentStatus).length).to.equal(1);
     expect(ShowContentWrapper.find(".season-item-wrapper").length).to.be.equal(
       0
     );
