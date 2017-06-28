@@ -17,7 +17,7 @@ type actionType = {
   }
 };
 
-const load_movie_details = (id: number) => {
+const load_movie_details = (id: number) => () => {
   return fetch(
     `https://api.themoviedb.org/3/movie/${id}?api_key=571f89e8e2fdb653f0b2bb281fa8f241`
   )
@@ -28,7 +28,7 @@ const load_movie_details = (id: number) => {
     });
 };
 
-const load_movie_credits = (id: number) => {
+const load_movie_credits = (id: number) => () => {
   return fetch(
     `https://api.themoviedb.org/3/movie/${id}/credits?api_key=571f89e8e2fdb653f0b2bb281fa8f241`
   )
@@ -38,7 +38,7 @@ const load_movie_credits = (id: number) => {
     .catch();
 };
 
-const load_movie_videos = (id: number) => {
+const load_movie_videos = (id: number) => () => {
   return fetch(
     `https://api.themoviedb.org/3/movie/${id}/videos?api_key=571f89e8e2fdb653f0b2bb281fa8f241`
   )
@@ -147,8 +147,8 @@ const movie_loaded_effects = id => {
     return [];
   }
   return [
-    Effects.promise(load_movie_videos.bind(null, id)),
-    Effects.promise(load_movie_credits.bind(null, id))
+    Effects.promise(load_movie_videos(id)),
+    Effects.promise(load_movie_credits(id))
   ];
 };
 
@@ -175,7 +175,7 @@ const MovieStateReducer = (
           ...state,
           loading_movie_details: true
         },
-        Effects.promise(load_movie_details.bind(null, id))
+        Effects.promise(load_movie_details(id))
       );
     case MOVIE_DETAILS_LOADED:
       if (!(payload && payload.hasOwnProperty("movie") && payload.movie)) {
