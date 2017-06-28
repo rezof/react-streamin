@@ -1,5 +1,8 @@
+// @flow
 import React from "react";
 import Styled from "styled-components";
+
+import type { movieCastType } from "../MovieState";
 
 const Wrapper = Styled.div`
   flex: 1;
@@ -39,7 +42,12 @@ const ActorName = Styled(name)`
 
 const CaracterName = name;
 
-const MovieCastTab = ({ cast, active }) => {
+type MovieCastTabPropsType = {
+  cast?: Array<movieCastType>,
+  active: boolean
+};
+
+const MovieCastTab = ({ cast, active }: MovieCastTabPropsType) => {
   return (
     <Wrapper active={active}>
       {cast &&
@@ -50,12 +58,18 @@ const MovieCastTab = ({ cast, active }) => {
   );
 };
 
-const MovieCastItem = ({ cast: { id, name, profile_path, character } }) => {
+type MovieCastItemPropsType = {
+  cast: movieCastType
+};
+
+const MovieCastItem = ({ cast }: MovieCastItemPropsType) => {
+  const { name, profile_path, character } = cast;
+  const actorImage = profile_path
+    ? `https://image.tmdb.org/t/p/w138_and_h175_bestv2${profile_path}`
+    : "";
   return (
     <CastItemWrapper>
-      <ActorImage
-        src={`https://image.tmdb.org/t/p/w138_and_h175_bestv2${profile_path}`}
-      />
+      <ActorImage src={actorImage} />
       <ActorName>
         {name}
       </ActorName>

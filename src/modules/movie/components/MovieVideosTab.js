@@ -1,5 +1,8 @@
+// @flow
 import React from "react";
 import Styled from "styled-components";
+
+import type { movieVideosType } from "../MovieState";
 
 const Wrapper = Styled.div`
   flex: 1;
@@ -35,7 +38,12 @@ const VideoNameText = Styled.span`
   padding: 10px;
 `;
 
-const MovieVideosTab = ({ videos, active }) => {
+type MovieVideosTabPropsType = {
+  videos?: Array<movieVideosType>,
+  active: boolean
+};
+
+const MovieVideosTab = ({ videos, active }: MovieVideosTabPropsType) => {
   return (
     <Wrapper active={active}>
       {videos &&
