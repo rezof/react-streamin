@@ -63,8 +63,7 @@ const filter_cast_from_credits = data => {
   }
 };
 
-type movieCastType = {
-  cast_id: number,
+export type movieCastType = {
   character: string,
   id: number,
   name: string,
@@ -80,7 +79,7 @@ export const movie_cast_loaded_action = (
   }
 });
 
-type movieVideosType = {
+export type movieVideosType = {
   id: string,
   key: string,
   name: string,
