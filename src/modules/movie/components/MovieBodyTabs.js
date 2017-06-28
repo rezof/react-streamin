@@ -1,3 +1,4 @@
+// @flow
 import React, { PureComponent } from "react";
 import Styled from "styled-components";
 
@@ -33,12 +34,19 @@ const MovieBodyTabText = Styled.span`
   letter-spacing: 0.5px;
 `;
 
+type propsType = {
+  selectedTab: string,
+  tabs: Array<string>,
+  tabClickHandler: Function
+};
+
 class MovieBodyTabs extends PureComponent {
+  props: propsType;
   render() {
     const { selectedTab, tabs, tabClickHandler } = this.props;
     return (
       <Wrapper>
-        {tabs.map(key =>
+        {tabs.map((key: string) =>
           <MovieBodyTab
             onClick={() => tabClickHandler(key)}
             active={selectedTab === key ? true : false}
